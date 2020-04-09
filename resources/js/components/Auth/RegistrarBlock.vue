@@ -5,23 +5,23 @@
             <form autocomplete="off" @submit.prevent="register" v-if="!success" method="post">
                 <div class="alert alert-danger" v-if="has_error && !success">
                     <p v-if="error == 'registration_validation_error'">Ошибка (и) проверки, пожалуйста, смотрите сообщение (я) ниже.</p>
-                    <p v-else>Ошибка, невозможно зарегистрироваться в это время. Если проблема не устранена, обратитесь к администратору.</p>
+                    <p v-else>{{$t('error_reg')}}</p>
                 </div>
                 <div class="form-wrap__input-wrap form-group">
                     <input class="form-wrap__input form-control form-control-lg" type="text"
                            :class="{'is-invalid':has_error && errors.name}"
-                           placeholder="Имя пользователя" v-model="name"/>
+                           :placeholder="$t('name_form')" v-model="name"/>
                     <span class="invalid-feedback" v-if="has_error && errors.name">{{ errors.name[0] }}</span>
                 </div>
                 <div class="form-wrap__input-wrap form-group">
-                    <input class="form-wrap__input form-control form-control-lg" type="password" placeholder="Пароль*"
+                    <input class="form-wrap__input form-control form-control-lg" type="password" :placeholder="$t('pass_form')"
                            :class="{'is-invalid':has_error && errors.password}"
                            v-model="password"/>
                     <span class="invalid-feedback" v-if="has_error && errors.password">{{ errors.password[0] }}</span>
                 </div>
                 <div class="form-wrap__input-wrap form-group">
                     <input class="form-wrap__input form-control form-control-lg" type="password"
-                           placeholder="Повторите пароль*" v-model="password_confirmation"/>
+                           :placeholder="$t('pass_conf_form')" v-model="password_confirmation"/>
                 </div>
                 <div class="form-wrap__input-wrap form-group">
                     <input class="form-wrap__input form-control form-control-lg" type="email" placeholder="@mail"
@@ -29,8 +29,8 @@
                            :class="{'is-invalid':has_error && errors.email}" />
                     <span class="invalid-feedback" v-if="has_error && errors.email">{{ errors.email[0] }}</span>
                 </div>
-                <button class="btn btn-primary btn-lg btn-block" type="submit">зарегистрироваться</button>
-                <router-link class="btn btn-primary btn-lg btn-block btn-reset" to="/">отменить</router-link>
+                <button class="btn btn-primary btn-lg btn-block" type="submit">{{$t('button_reg')}}</button>
+                <router-link class="btn btn-primary btn-lg btn-block btn-reset" to="/">{{$t('cancel_reg')}}</router-link>
             </form>
             <p  v-if="success">
                 Вы зарегистрировались.Войдите под своим логином
@@ -95,7 +95,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>

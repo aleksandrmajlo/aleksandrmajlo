@@ -6,3 +6,140 @@
 
 // Bootstrap
 // @import '~bootstrap/scss/bootstrap';
+@import "~leaflet/dist/leaflet.css";
+@import "~vue2-dropzone/dist/vue2Dropzone.min.css";
+
+#dropzone {
+    border-radius: .625rem !important;
+    border: 1px dashed rgb(81, 158, 235) !important;
+    background-color: rgb(236, 245, 255) !important;
+    text-align: center !important;
+    min-height: 4.375rem !important;
+    padding: 1.25rem .625rem .625rem !important;
+    position: relative !important;
+
+    .dropzone .dz-message {
+        margin: 1em 0 !important;
+    }
+}
+
+.ap-nostyle-dropdown-menu {
+    border-radius: 0 0 .625rem .625rem;
+    border: 1px solid rgb(81, 158, 235);
+    background-color: rgb(255, 255, 255);
+
+    &>div {
+        .ap-nostyle-suggestions {
+            .ap-nostyle-suggestion {
+                display: block;
+                margin-bottom: .5rem;
+                border-bottom: 1px solid rgb(190, 215, 241);
+                text-decoration: none !important;
+                cursor: pointer;
+
+                .ap-suggestion-icon {
+                    display: none !important;
+                }
+            }
+        }
+    }
+}
+
+.search-block__input-wrap {
+
+    .search-block__input {
+        color: #fff !important
+    }
+
+    span.algolia-places-nostyle {
+        width: 100%;
+    }
+
+    .ap-nostyle-icon-pin,
+    .ap-nostyle-icon-clear {
+        display: none !important;
+    }
+}
+
+.ap-footer {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+
+.map {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: calc(100% - 2.125rem) !important;
+    z-index: -1 !important;
+}
+
+#prevViewDropThumb {
+    margin-bottom: 15px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+    .dz-image-preview {
+        width: calc(33% - 10px);
+        margin-right: 10px;
+        height: 100%;
+        position: relative;
+        transition-property: transform;
+
+        .dz-image {
+            display: block;
+            position: relative;
+            border-radius: .625rem;
+            border: 1px solid rgb(81, 158, 235);
+            overflow: hidden;
+
+            &:before {
+                content: "";
+                position: relative;
+                height: 0;
+                display: block;
+                padding-bottom: 130%;
+            }
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: top;
+                font-family: "object-fit: cover; object-position: top;";
+                position: absolute;
+                z-index: -1;
+                left: 0;
+                top: 0;
+            }
+        }
+
+
+    }
+}
+
+.dz-size,
+.dz-filename,
+.dz-error-mark,
+.dz-success-mark {
+    display: none !important
+}
+
+.leaflet-top.leaflet-left {
+    display: none !important;
+}
+
+.icon-arrow-alt-circle-down.active {
+    transform: rotateX(180deg);
+}
+
+svg.icon-arrow-alt-circle-down.close_firm {
+    color: rgb(7, 32, 57);
+    font-size: 1.3125rem;
+    margin-left: .3125rem;
+    transition: all .36s;
+    cursor: pointer;
+}

@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -81,6 +81,11 @@ return [
     */
 
     'locale' => 'ru',
+    'locales' => [
+        'uk' => 'UA',
+        'ru' => 'RU',
+        'en' => 'EN',
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -175,6 +180,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Grimzy\LaravelMysqlSpatial\SpatialServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+//        Stevebauman\Location\LocationServiceProvider::class,
+        Nagy\LaravelRating\LaravelRatingServiceProvider::class
 
     ],
 
@@ -227,6 +236,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Image' => Intervention\Image\Facades\Image::class,
+//        'Location' => 'Stevebauman\Location\Facades\Location',
+        "LaravelRating" => \Nagy\LaravelRating\LaravelRatingFacade::class,
 
     ],
 

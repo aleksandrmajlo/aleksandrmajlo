@@ -14,4 +14,6 @@ Route::group([
 
     $router->resource('/users', UserController::class);
 
+    $router->resource('/firms', FirmController::class);
+
 });

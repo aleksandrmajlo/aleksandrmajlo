@@ -1,7 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9898c4a6-71ed-4a0a-86da-e922c0f18eb7" name="Default Changelist" comment="" />
+    <list default="true" id="9898c4a6-71ed-4a0a-86da-e922c0f18eb7" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/UploadImagesController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/firm_type.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/Dropzone/DropzoneComp.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/Firm/ReviewStars.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/Firm/TimeWork.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/LangButton/Flag.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/LangButton/LangButton.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/Map/GeolocationMy.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/Map/GoogleBlock.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/Map/LmapBlock.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/Map/MapBlock.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/Map/YandexBlock.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/Search/SearchBlock.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/Search/SearchFirms.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/Search/SearchPlaces.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/store/modules/auth.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/store/modules/firms.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/store/modules/map.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/views/Account.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/views/AddFirm.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/views/AddReview.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/views/Favorite.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/views/NotFound.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/views/Object.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/views/ReadFirm.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/views/Review.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/views/Search.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/uk/validation.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shwal/1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/maps.local.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/maps.local.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Verstka/0001wikirent/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Verstka/0001wikirent/public/2.html" beforeDir="false" afterPath="$PROJECT_DIR$/Verstka/0001wikirent/public/2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Verstka/0001wikirent/public/3.html" beforeDir="false" afterPath="$PROJECT_DIR$/Verstka/0001wikirent/public/3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Verstka/0001wikirent/public/4.html" beforeDir="false" afterPath="$PROJECT_DIR$/Verstka/0001wikirent/public/4.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Verstka/0001wikirent/readme.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Admin/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/routes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AuthController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/admin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/filesystems.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/jwt.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/jwt.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js.LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/mix-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/mix-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/bootstrap.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Auth/LoginBlock.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Auth/LoginBlock.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Auth/RegistrarBlock.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Auth/RegistrarBlock.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/views/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/views/Home.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/ar/admin.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/az/admin.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/validation.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/validation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/es/admin.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/fa/admin.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/fr/admin.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/he/admin.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/id/admin.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/ja/admin.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/ko/admin.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/ms/admin.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/nl/admin.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/pl/admin.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/pt-BR/admin.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/pt/admin.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/ru/validation.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ru/validation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/tr/admin.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/ur/admin.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/zh-CN/admin.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/zh-TW/admin.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack.mix.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.mix.js" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,15 +106,20 @@
       <executable />
     </execution>
   </component>
+  <component name="FavoritesManager">
+    <favorites_list name="maps.local" />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="HTML File" />
+        <option value="JavaScript File" />
         <option value="Vue Single File Component" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/Verstka/0001wikirent" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -125,17 +222,41 @@
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php56" />
       <path value="$PROJECT_DIR$/vendor/maximebf/debugbar" />
       <path value="$PROJECT_DIR$/vendor/barryvdh/laravel-debugbar" />
+      <path value="$PROJECT_DIR$/vendor/cviebrock/eloquent-sluggable" />
+      <path value="$PROJECT_DIR$/vendor/cocur/slugify" />
+      <path value="$PROJECT_DIR$/vendor/jmikola/geojson" />
+      <path value="$PROJECT_DIR$/vendor/geo-io/wkb-parser" />
+      <path value="$PROJECT_DIR$/vendor/geo-io/interface" />
+      <path value="$PROJECT_DIR$/vendor/grimzy/laravel-mysql-spatial" />
+      <path value="$PROJECT_DIR$/vendor/intervention/image" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/vendor/laravel-admin-ext/latlong" />
+      <path value="$PROJECT_DIR$/vendor/maxmind-db/reader" />
+      <path value="$PROJECT_DIR$/vendor/stevebauman/location" />
+      <path value="$PROJECT_DIR$/vendor/geoip2/geoip2" />
+      <path value="$PROJECT_DIR$/vendor/maxmind/web-service-common" />
+      <path value="$PROJECT_DIR$/vendor/nagy/laravel-rating" />
     </include_path>
   </component>
   <component name="ProjectId" id="1ZwzMWlbxf80lpzYONoAW2VVTjL" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/lang/uk" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\PhpStorm 2019.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\OSPanel\domains\Ruks\maps\maps.local\resources\lang\uk" />
+      <recent name="D:\OSPanel\domains\Ruks\maps\maps.local\resources\js\store\modules" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\OSPanel\domains\Ruks\maps\maps.local\resources\js\components\Search" />
       <recent name="D:\OSPanel\domains\Ruks\maps\maps.local\resources\js" />
       <recent name="D:\OSPanel\domains\Ruks\maps\maps.local\resources\js\components" />
     </key>
@@ -152,11 +273,23 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JavaScript Debug.LmapBlock.vue">
+    <configuration name="LmapBlock.vue" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/maps.local/resources/js/components/Map/LmapBlock.vue" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="UploadImagesController.php" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/maps.local/Http/Controllers/UploadImagesController.php" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.LmapBlock.vue" />
+        <item itemvalue="JavaScript Debug.UploadImagesController.php" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -171,7 +304,17 @@
       <workItem from="1585764897522" duration="3454000" />
       <workItem from="1585819231616" duration="649000" />
       <workItem from="1585842242376" duration="15562000" />
-      <workItem from="1585892723162" duration="16405000" />
+      <workItem from="1585892723162" duration="38102000" />
+      <workItem from="1585980382337" duration="29368000" />
+      <workItem from="1586023741575" duration="13932000" />
+      <workItem from="1586064398864" duration="40720000" />
+      <workItem from="1586152171736" duration="47123000" />
+      <workItem from="1586240272843" duration="4840000" />
+      <workItem from="1586251324664" duration="36196000" />
+      <workItem from="1586325108443" duration="29073000" />
+      <workItem from="1586368568037" duration="1689000" />
+      <workItem from="1586371946861" duration="8101000" />
+      <workItem from="1586411314086" duration="44705000" />
     </task>
     <servers />
   </component>
@@ -190,5 +333,71 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/resources/views/layouts/app.blade.php</url>
+          <line>32</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/resources/js/auth.js</url>
+          <line>7</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/resources/js/auth.js</url>
+          <line>25</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/resources/js/auth.js</url>
+          <line>28</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/resources/js/views/AddFirm.vue</url>
+          <line>76</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/resources/js/views/AddFirm.vue</url>
+          <line>196</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/resources/js/views/AddFirm.vue</url>
+          <line>7</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/resources/js/views/AddFirm.vue</url>
+          <line>313</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/resources/js/views/Search.vue</url>
+          <line>4</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/resources/js/components/Map/LmapBlock.vue</url>
+          <line>88</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/resources/js/components/Map/LmapBlock.vue</url>
+          <line>90</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/resources/js/views/Object.vue</url>
+          <line>42</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

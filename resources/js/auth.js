@@ -1,9 +1,10 @@
 import bearer from '@websanova/vue-auth/drivers/auth/bearer'
 import axios from '@websanova/vue-auth/drivers/http/axios.1.x'
 import router from '@websanova/vue-auth/drivers/router/vue-router.2.x'
+import store from '~/store'
+import * as types from '~/store/mutation-types'
 
-// Auth base configuration some of this options
-// can be override in method calls
+
 const config = {
     auth: bearer,
     http: axios,
@@ -37,8 +38,23 @@ const config = {
         url: 'auth/refresh',
         method: 'GET',
         enabled: true,
-        interval: 30
+        interval: 3000
+    },
+    parseUserData: function (data) {
+        try {
+            if (typeof data.error !== "undefined" && data.error == "Unauthorized") {
+                store.commit('auth/' + types.LOGOUT);
+                store.commit('auth/' + types.FETCH_USER_FAILURE);
+            } else {
+                store.commit('auth/' + types.FETCH_USER_SUCCESS, {
+                    user: data.user
+                })
+            }
+        } catch (e) {
+            console.log(e)
+        }
     }
+
 }
 
 export default config

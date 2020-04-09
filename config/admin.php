@@ -11,7 +11,7 @@ return [
     | login page.
     |
     */
-    'name' => 'Laravel-admin',
+    'name' => 'Wikirent',
 
     /*
     |--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ return [
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo' => '<b>Laravel</b> admin',
+    'logo' => '<b>Wikirent</b> ',
 
     /*
     |--------------------------------------------------------------------------
@@ -34,7 +34,7 @@ return [
     | '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo-mini' => '<b>La</b>',
+    'logo-mini' => '<b>Wiki</b>',
 
     /*
     |--------------------------------------------------------------------------
@@ -95,7 +95,7 @@ return [
     | If your page is going to be accessed via https, set it to `true`.
     |
     */
-    'https' => env('ADMIN_HTTPS', false),
+    'https' => env('ADMIN_HTTPS', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -158,7 +158,7 @@ return [
 
         // Image and file upload path under the disk above.
         'directory' => [
-            'image' => 'images',
+            'image' => 'upload',
             'file'  => 'files',
         ],
     ],
@@ -396,6 +396,37 @@ return [
     |
     */
     'extensions' => [
+        'latlong' => [
 
+            // Whether to enable this extension, defaults to true
+            'enable' => true,
+
+            // Specify the default provider
+            'default' => 'google',
+
+            // According to the selected provider above, fill in the corresponding api_key
+            'providers' => [
+
+                'google' => [
+                    'api_key' => 'AIzaSyDLV3jrTwKlpeDY2nXTrQfvnAr8AGDDd_0',
+                ],
+
+                'yadex' => [
+                    'api_key' => '',
+                ],
+
+                'baidu' => [
+                    'api_key' => 'xck5u2lga9n1bZkiaXIHtMufWXQnVhdx',
+                ],
+
+                'tencent' => [
+                    'api_key' => 'VVYBZ-HRJCX-NOJ4Z-ZO3PU-ZZA2J-QPBBT',
+                ],
+
+                'amap' => [
+                    'api_key' => '3693fe745aea0df8852739dac08a22fb',
+                ],
+            ]
+        ]
     ],
 ];
