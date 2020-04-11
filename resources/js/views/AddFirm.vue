@@ -441,7 +441,6 @@
                             if(typeof response.data.error!=="undefined"){
                                 this.showShwal( "error",response.data.error)
                             }else{
-
                                 this.showShwal( "success",this.$t('successAddFirm'))
                                 this.$router.push({name: 'search'});
                                 //обнуление поиска

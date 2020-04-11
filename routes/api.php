@@ -39,7 +39,15 @@ Route::group(['middleware' => 'auth:api'], function(){
 Route::group(['namespace' => 'API'], function () {
     Route::get('getFirms', 'FirmController@index');
     Route::post('getFirm', 'FirmController@getFirm');
+    Route::post('getReview', 'ReviewController@getReview');
+    Route::post('search', 'SearchController@index');
+
+
+
 });
 Route::group(['middleware' => 'auth:api','namespace' => 'API'], function () {
      Route::post('addFirm', 'FirmController@store');
+
+     Route::post('addReview', 'ReviewController@addReview');
+     Route::post('addPhotos', 'PhotoController@addPhotos');
 });

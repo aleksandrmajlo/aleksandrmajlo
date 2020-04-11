@@ -15,12 +15,9 @@ class CreateRatingsTable extends Migration
         if (!Schema::hasTable('ratings')) {
             Schema::create('ratings', function (Blueprint $table) {
                 $table->increments('id');
-
                 $table->morphs('model');
                 $table->morphs('rateable');
-
                 $table->decimal('value', 2, 1);
-
                 $table->timestamps();
             });
         }

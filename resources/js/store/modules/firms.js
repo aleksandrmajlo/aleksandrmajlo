@@ -1,11 +1,10 @@
 import * as types from '../mutation-types'
-
-const {locale, locales} = window.config
 // state
 export const state = {
-    coord_firms: [],
+    coord_firms: [],// тут координаты
     firms: [],
-    page_firms: [],// сюда загружаем фирмы который открываются по урл '/object/17'
+    page_firms: [], // сюда загружаем фирмы который открываются по урл '/object/17'
+    reviews: [], // отзывы для фирмы
     banners: "/img/@2x/banner-sm.jpg"
 }
 // getters
@@ -18,7 +17,14 @@ export const getters = {
             return state.page_firms[index];
         }
         return null;
-    }
+    },
+    getReviewsByFirm_id: state => id => {
+        let index = state.reviews.map(item => parseInt(item.firm_id)).indexOf(parseInt(id));
+        if (index !== -1) {
+            return state.reviews[index].reviews;
+        }
+        return null;
+    },
 }
 // mutations
 export const mutations = {
@@ -26,8 +32,12 @@ export const mutations = {
     [types.SET_FIRMS](state, firms) {
         state.coord_firms = firms
     },
+
     [types.SET_FIRM](state, firm) {
         state.page_firms.push(firm)
+    },
+    [types.SET_REVIEW](state, reviews) {
+        state.reviews.push(reviews)
     },
 
 }
@@ -35,20 +45,39 @@ export const mutations = {
 export const actions = {
 
     // это координаты для карты
-    getGoordFirms({commit}) {
+    getGoordFirms({
+        commit
+    }) {
         axios.get('getFirms')
             .then(response => {
                 commit(types.SET_FIRMS, response.data.firms)
             })
     },
-
-    getFirm({commit}, id) {
-        return axios.post("getFirm", {id: id})
+    getFirm({
+        commit
+    }, id) {
+        return axios.post("getFirm", {
+                id: id
+            })
             .then(response => {
                 commit(types.SET_FIRM, response.data.firm)
             })
             .catch(err => {
-                console.log(err,'firms/getFirm');
+                alert('Такого объекта не существует')
+            })
+    },
+
+    getReviews({
+        commit
+    }, id) {
+        return axios.post("getReview", {
+                id: id
+            })
+            .then(response => {
+                commit(types.SET_REVIEW, response.data.reviews)
+            })
+            .catch(err => {
+                alert('Такого объекта не существует')
             })
     }
 

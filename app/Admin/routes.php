@@ -16,4 +16,8 @@ Route::group([
 
     $router->resource('/firms', FirmController::class);
 
+    $router->resource('reviews', ReviewController::class);
+
+    $router->resource('photos', PhotoController::class);
+
 });

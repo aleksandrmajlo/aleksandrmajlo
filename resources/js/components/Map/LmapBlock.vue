@@ -1,8 +1,18 @@
 <template>
-    <l-map ref="map" class="map" :zoom="zoom" :center="center" :attributionControl="false" :scrollWheelZoom="false">
-        <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
-        <l-control-zoom position="bottomright"></l-control-zoom>
-    </l-map>
+    <div>
+        <!--         <pre style="margin-bottom: 20px;">{{firms}}</pre>-->
+        <l-map
+            ref="map"
+            class="map"
+            :zoom="zoom"
+            :center="center"
+            :attributionControl="false"
+            :scrollWheelZoom="false"
+        >
+            <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
+            <l-control-zoom position="bottomright"></l-control-zoom>
+        </l-map>
+    </div>
 </template>
 
 <script>
@@ -50,12 +60,12 @@
                 this.addMarker();
                 this.findBestZoom();
             },
-            user_position(){
-                if(this.user_position.lat!==null&&this.user_position.lng!==null){
+            user_position() {
+                if (this.user_position.lat !== null && this.user_position.lng !== null) {
                     L.marker(this.user_position).addTo(this.$refs.map.mapObject)
                         .bindPopup("Вы находитесь в нескольких метрах от этой точки").openPopup();
                     // L.circle(this.user_position, this.radius).addTo(this.$refs.map.mapObject);
-                    this.$refs.map.mapObject.setView(this.user_position, 13, { "animate": false})
+                    this.$refs.map.mapObject.setView(this.user_position, 13, {"animate": false})
                 }
             }
         },
@@ -67,7 +77,44 @@
 
         },
         methods: {
+
             addMarker() {
+                this.mapMarker = [];
+                let app = this;
+                for (let key in this.firms) {
+                    let coord=[];
+                    let title="";
+                    // let id=[];
+                    let address="";
+                    let  firms=this.firms[key];
+                    for (let index = 0; index < firms.length; index++) {
+                        const element = firms[index];
+                        if(index===0){
+                            address=element.address;
+                            coord=element.coord
+                        }
+                        title+='<a class="setObject" data-key="'+key+'" data-id="'+element.id+'" href="#">'+element.title+'</a><br>';
+                        // id.push(element.id)
+                    }
+                    let marker = L.marker(coord, {
+                        title: address,
+                        alt: address,
+                        // id: firm.id
+                    });
+                    marker.bindPopup('<p class="text-center"><strong>' +  title+ '</strong></p><p>' + address + '</p>');
+                    marker.addTo(app.$refs.map.mapObject);
+                    app.mapMarker.push(marker)
+                }
+                $('body').on('click','.setObject',function (e) {
+                    e.preventDefault();
+                    let id=$(this).data('id')
+                    app.$router.push({ name: 'object', params: { id: id } })
+                    let key=$(this).data('key');
+                    let coord=app.firms[key][0].coord;
+                    app.scrollToCoord(coord);
+                })
+                /* ***********************
+
                 this.mapMarker = [];
                 let app = this;
                 for (let index = 0; index < this.firms.length; index++) {
@@ -82,16 +129,18 @@
                     marker.bindPopup('<p class="text-center"><strong>' + firm.title + '</strong></p><p>' + firm.address + '</p>');
                     marker.on('mouseover', function (e) {
                         this.openPopup()
-                    })
+                    });
                     marker.on('mouseout', function (e) {
                         this.closePopup()
-                    })
+                    });
                     marker.on("click", function (e) {
                         app.$router.push({name: 'object', params: {id: e.target.options.id}})
                     });
                     marker.addTo(this.$refs.map.mapObject);
                     this.mapMarker.push(marker);
-                }
+
+                    }
+                    */
             },
             addMarkerSearch() {
                 this.searchMarker = L.marker([this.search_latlng.lat, this.search_latlng.lng], {
@@ -113,11 +162,19 @@
             findBestZoom() {
                 if (this.mapMarker.length > 0) {
                     var featureGroup = L.featureGroup(this.mapMarker);
-                    this.$refs.map.mapObject.fitBounds(featureGroup.getBounds().pad(0.5), {
+                    this.$refs.map.mapObject.fitBounds(featureGroup.getBounds().pad(0.1), {
                         animate: false
                     });
                 }
             },
+            scrollToCoord(coord){
+                this.$refs.map.mapObject.setView(coord, 15, {
+                    "animate": false,
+                    "pan": {
+                        "duration": 10
+                    }
+                })
+            }
             /*
             onLocationFound(e) {
                 console.log(333333333)

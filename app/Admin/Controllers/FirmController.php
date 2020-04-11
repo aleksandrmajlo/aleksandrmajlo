@@ -342,6 +342,7 @@ class FirmController extends Controller
 
         $form->disableCreatingCheck();
         $form->disableViewCheck();
+
         $form->tools(function (Form\Tools $tools) {
             $tools->disableView();
         });

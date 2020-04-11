@@ -1,6 +1,6 @@
 <template>
     <div class="mapOver" v-if="mapname=='OpenStreet'">
-        <lmap-block :firms="firms"></lmap-block>
+        <lmap-block :firms="coord_firms"></lmap-block>
     </div>
     <div class="mapOver" v-else-if="mapname=='Yandex'">
         <yandex-block></yandex-block>
@@ -26,7 +26,7 @@
         computed: {
             ...mapGetters({
                 mapname: "map/mapname",
-                firms: "firms/coord_firms",
+                coord_firms: "firms/coord_firms",
             })
         },
         created() {

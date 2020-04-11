@@ -10,6 +10,7 @@ import Favorite from './views/Favorite'
 import Object from './views/Object'
 import Review from './views/Review'
 import AddReview from './views/AddReview'
+import AddPhoto from './views/AddPhoto'
 // Routes
 const routes = [{
         path: '/',
@@ -21,7 +22,8 @@ const routes = [{
     },
 
     {
-        path: '/search',
+        path: '/search/',
+        name: 'search',
         component: Search,
         props: (route) => ({
             query: route.query.q
@@ -49,10 +51,23 @@ const routes = [{
         }
     },
 
+
     {
         path: '/addreview/',
         name: 'addreview',
         component: AddReview,
+        props: (route) => ({
+            id: route.query.id
+        }),
+        meta: {
+            auth: true
+        }
+    },
+
+    {
+        path: '/addphoto/',
+        name: 'addphoto',
+        component: AddPhoto,
         props: (route) => ({
             id: route.query.id
         }),
@@ -131,5 +146,4 @@ router.beforeEach((to, from, next) => {
     }, 500)
 
 })
-
 export default router

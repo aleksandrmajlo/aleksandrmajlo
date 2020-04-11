@@ -1,23 +1,36 @@
 <template>
-    <div v-show-slide:400:ease="showMapYesNoSidebar" class="sidebarLeft sidebarLeft--md section container-fluid" id="sidebarLeft"    >
+    <div
+        v-show-slide:400:ease="showMapYesNoSidebar"
+        class="sidebarLeft sidebarLeft--md section container-fluid"
+        id="sidebarLeft"
+    >
         <div class="panel-block panel-block--md border border-primary" v-if="firm!==null">
-            <div class="panel-block__head bg-wrap">
-                <img class="img-bg object-fit-js" :src="firm_photo" alt/>
-                <div class="panel-block__head-title">{{firm.title}}</div>
-            </div>
+            <photos :photos="firm.photos" :key="firm.id"></photos>
             <div class="panel-block__body">
-
-                <review-stars></review-stars>
+                <h2 class="text-center">{{firm.title}}</h2>
+                <div class="panel-block__link-add panel-block__link-add--title">
+                    <span>{{$t('ob_add_review')}}</span>
+                    <review-stars v-model="value" :start_value="null"
+                                  :disabled="false"
+                                  classMy=" mb-1"></review-stars>
+                </div>
 
                 <div class="form-group">
-                    <textarea class="form-control border-dotted" v-model="comment" placeholder="Добавьте описание"></textarea>
+          <textarea
+              class="form-control border-dotted"
+              v-model="comment"
+              placeholder="Добавьте описание"
+          ></textarea>
                 </div>
                 <dropzone-comp ref="upload" v-on:SetImagesChild="SetImages"></dropzone-comp>
-                <button class="panel-block__btn-add" type="submit">
+                <button :disabled="isDisabled" @click.prevent="sendReview" class="panel-block__btn-add" type="submit">
                     {{$t('ob_button')}}
                 </button>
                 <div class="text-left mt-a">
-                    <a class="tdn text-body" href="#">{{$t('ob_back')}}</a>
+                    <router-link class="tdn text-body" :to="'/object/'+this.id">
+                        {{$t('ob_back')}}
+                    </router-link>
+                    <a href="#"></a>
                 </div>
             </div>
             <div class="panel-block__footer">
@@ -31,29 +44,26 @@
     import {mapGetters} from "vuex";
     import DropzoneComp from "~/components/Dropzone/DropzoneComp.vue";
     import ReviewStars from "~/components/Firm/ReviewStars.vue";
+    import Photos from "~/components/Firm/Photos.vue";
+
     export default {
         name: "AddReview",
         data() {
             return {
                 id: null,
                 firm: null,
-                comment:"",
-                value:0
+                comment: "",
+                value: null,
+                isDisabled: false
             };
         },
-        components:{ReviewStars, DropzoneComp},
+        components: {ReviewStars, DropzoneComp, Photos},
         computed: {
             ...mapGetters({
                 showMapYesNoSidebar: "map/showMapYesNoSidebar",
                 banners: "firms/banners",
-                user: 'auth/user'
+                user: "auth/user"
             }),
-            firm_photo() {
-                if (this.firm && this.firm.photos.length > 0) {
-                    return this.firm.photos[0].resized;
-                }
-                return "/img/@2x/2019-09-06.png";
-            }
         },
         watch: {
             $route: {
@@ -80,8 +90,48 @@
                     this.firm = firm;
                 }
             },
-            SetImages(){
-
+            SetImages(images = false) {
+                if (!images) {
+                    images = this.$refs.upload.getFieled();
+                }
+                let img_ar = [];
+                images.forEach(img => {
+                    img_ar.push(img.name);
+                });
+                return img_ar;
+            },
+            sendReview() {
+                if (this.value == null) {
+                    this.showShwal('warning', this.$t('rating_warning'));
+                    return false;
+                }
+                this.isDisabled = true;
+                let data = {
+                    value: this.value,
+                    comment: this.comment,
+                    user: this.user.id,
+                    photos: this.SetImages(),
+                    firm_id: this.id
+                };
+                console.log(data)
+                axios({
+                    method: "post",
+                    url: "addReview",
+                    headers: {
+                        Authorization: "Bearer " + this.$auth.token("laravel-vue-spa")
+                    },
+                    data: data
+                })
+                    .then(response => {
+                        this.showShwal('info', this.$t('rating_check'));
+                        this.$router.push({name: 'object', params: {id: this.id}})
+                    })
+                    .catch(e => {
+                        this.showShwal('error', this.$t('ALL_EROOR'));
+                    })
+                    .finally(() => {
+                        this.isDisabled = false;
+                    })
             }
         }
     };

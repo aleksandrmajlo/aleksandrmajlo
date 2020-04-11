@@ -16,3 +16,4 @@ export const USERPOSITION = 'USERPOSITION' // координаты пользо�
 //firms.js
 export const SET_FIRMS = 'SET_FIRMS'
 export const SET_FIRM = 'SET_FIRM'
+export const SET_REVIEW = 'SET_REVIEW'

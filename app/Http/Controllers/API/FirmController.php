@@ -18,13 +18,32 @@ class FirmController extends Controller
     {
         $this->photos_path = public_path('/upload');
     }
+    // получение координат для вывода на карте
     public function index()
     {
-        $firms = Firm::where('status', 1)->select('id', 'title', 'address', 'location')->get()->toArray();
+        $firms = Firm::where('status', 1)->select('id', 'title', 'address', 'location')->get();
+        $res = [];
         foreach ($firms as $k => $firm) {
-            $firms[$k]['latlng'] = ['lat' => $firm['location']->getLat(), "lng" => $firm['location']->getLng()];
+            $lat = $firm->location->getLat();
+            $lng = $firm->location->getLng();
+            $coord = $lat . "_" . $lng;
+            if (isset($res[$coord])) {
+                $res[$coord][] = [
+                    "id" => $firm->id,
+                    "title" => $firm->title,
+                    "address" => $firm->address,
+                ];
+            } else {
+                $res[$coord] = [];
+                $res[$coord][] = [
+                    "id" => $firm->id,
+                    "title" => $firm->title,
+                    "address" => $firm->address,
+                    "coord"=>['lat' => $lat, "lng" => $lng]
+                ];
+            }
         }
-        return response()->json(['firms' => $firms]);
+        return response()->json(['firms' => $res]);
     }
     // получение одиночной фирмы
     public function getFirm(Request $request)
@@ -33,27 +52,18 @@ class FirmController extends Controller
         try {
             // $firm_type=config('firm_type');
             $firm = Firm::select('id', 'title', 'address', 'type', 'time_work', 'service', 'email', 'phone', 'meta_title', 'meta_description', 'location', 'photos')->findOrFail($id);
-            $photos = $firm->photos;
-            $photos_res = [];
-            if (!empty($photos)) {
-                $url = config('app.url');
-                foreach ($photos as $photo) {
-                    $photo_name = str_replace('upload/', '', $photo);
-                    $resized_name = Upload::where('filename', $photo_name)->first();
-                    if ($resized_name) {
-                        $resized_res = $url . '/upload/' . $resized_name->resized_name;
-                    } else {
-                        $resized_res = $url . '/' . $photo;
-                    }
-                    $photos_res[] = ['photo' => $url . '/' . $photo, 'resized' => $resized_res];
-                }
+            $firm->photos = $firm->allphotos;
+            $firm->rating=intval($firm->ratingsAvg());
+            $lat = $firm->location->getLat();
+            $lng = $firm->location->getLng();
+            $coord = $lat . "_" . $lng;
+            $firm->coord=$coord;
 
-            }
-            $firm->photos = $photos_res;
             return response()->json(
                 [
                     'firm' => $firm,
                 ]);
+
         } catch (ModelNotFoundException $ex) {
             return response()->json(['error' => trans('validation.notFirm')], 404);
         }
