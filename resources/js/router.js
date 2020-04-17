@@ -11,8 +11,13 @@ import Object from './views/Object'
 import Review from './views/Review'
 import AddReview from './views/AddReview'
 import AddPhoto from './views/AddPhoto'
+import Advertising from './views/Advertising'
+import Error from './views/Error'
+import Message from './views/Message'
 // Routes
-const routes = [{
+const routes = [
+
+    {
         path: '/',
         name: 'home',
         component: Home,
@@ -22,12 +27,36 @@ const routes = [{
     },
 
     {
-        path: '/search/',
+        path: '/advertising',
+        name: 'advertising',
+        component: Advertising,
+        meta: {
+            auth: undefined
+        }
+    },
+
+    {
+        path: '/error',
+        name: 'error',
+        component: Error,
+        meta: {
+            auth: undefined
+        }
+    },
+
+    {
+        path: '/message',
+        name: 'message',
+        component: Message,
+        meta: {
+            auth: undefined
+        }
+    },
+
+    {
+        path: '/search',
         name: 'search',
         component: Search,
-        props: (route) => ({
-            query: route.query.q
-        }),
         meta: {
             auth: undefined
         }
@@ -122,14 +151,15 @@ const routes = [{
     },
 
     {
-        path: '/404',
+        // path: '/404',
+        path: '*',
         name: '404',
         component: () => import("./views/NotFound.vue")
     },
-    {
-        path: '*',
-        redirect: '/404'
-    }
+    // {
+    //     path: '*',
+    //     redirect: '/404'
+    // }
 ];
 
 const router = new VueRouter({
@@ -140,10 +170,18 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     store.commit('map/ROUTERSHOWHIDDENSIDEBAR', false);
-    next();
+    // для мобилки скрыть меню при переходе
+    $('.toggle-menu-mobile_my').removeClass('on');
+    $(".menu-mobile--js").removeClass("active");
+    $('body').removeClass("fixed");
+    // для мобилки скрыть меню при переходе
     setTimeout(() => {
         store.commit('map/ROUTERSHOWHIDDENSIDEBAR', true);
-    }, 500)
+    }, 400)
+    next();
 
+})
+router.onError(er => {
+    console.log(er)
 })
 export default router

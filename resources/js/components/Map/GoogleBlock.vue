@@ -33,15 +33,19 @@
             ...mapGetters({
                 zoom: "map/zoom",
                 center: "map/center",
-                mapname: "map/mapname",
 
-            })
+                search: "map/search",
+                user_position: "map/user_position",
+                radius: "map/radius"
+            }),
+            currentRouteName() {
+                return this.$route.name;
+            }
         },
-        methods:{
-            // setPlace(place) {
-            //     this.place = place
-            // },
+        mounted() {
+
         }
+
     }
 </script>
 

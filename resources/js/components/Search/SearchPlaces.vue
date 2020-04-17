@@ -1,54 +1,75 @@
 <template>
-    <div class="search-block__input-wrap">
-        <input id="my-input-search" class="search-block__input" type="text"
-               :placeholder="$t('search')"/>
-        <button class="search-block__btn" onclick="return false" type="submit">
-            <img src="/img/svg/search.svg" alt=""/>
-        </button>
-        <button class="search-block__btn search-block__btn--show-js d-lg-none" onclick="return false" type="button">
-            <img src="/img/svg/search.svg" alt=""/>
-        </button>
+    <div class="panel-block__input-wrap form-group">
+        <div class="searcBlockPlace">
+            <input
+                id="my-input-search"
+                :class="{'is-invalid':!isValid}"
+                class="panel-block__input form-control border-dotted"
+                type="text"
+                :placeholder="$t('search')"
+            />
+        </div>
     </div>
 </template>
-
 <script>
-    import {mapGetters} from 'vuex'
-
-    const options = {
-        // на день
-        // appId: 'plNE57FG36HY',
-        // apiKey: '4ca625b39b5b1e2f8c4282d51de2135a',
-        //100 0000
-        appId: 'plGI4WX834ON',
-        apiKey: 'c6b248d20b8626e86fa7785893a9160c',
-        container: '#my-input-search',
-        style: false,
-    };
-    const reconfigurableOptions = {
-        language: 'ru',
-        type: 'address',
-        aroundLatLngViaIP: false
-    };
-
+    import {mapGetters} from "vuex";
+    import places from 'places.js';
+    var preferredLanguage = window.navigator.language.split("-")[0];
     export default {
         name: "SearchPlaces",
         data() {
             return {
-                places: null,
+                places: null
+            };
+        },
+        props: {
+            isValid: {
+                type: Boolean,
+                default: true
             }
         },
         mounted() {
-            this.places = places(options).configure(reconfigurableOptions);
-            this.places.on('change', (e) => {
-                if (e.suggestion.length === 0) return false;
-                let res = e.suggestion;
-                this.$store.commit('map/SET_SEARCH', {
-                    value: res.value,
-                    type: res.type,
-                    latlng: res.latlng,
-                })
+            this.places = places( {
+                appId: appId,
+                apiKey: apiKey,
+                container: "#my-input-search"
+            }).configure({
+                language: preferredLanguage,
+                type: "address",
+                aroundLatLngViaIP: false
             });
-        }
-    }
+            this.places.on("change", e => {
+                if (e.suggestion.length === 0) {
+                    this.$store.commit("map/SET_SEARCH", {
+                        value: "",
+                        latlng: null,
+                        type: ""
+                    });
+                } else {
+                    let res = e.suggestion;
+                    this.$store.commit("map/SET_SEARCH", {
+                        value: res.value,
+                        type: res.type,
+                        latlng: res.latlng
+                    });
+                }
+            });
+            this.places.on("clear", e => {
+                this.$store.commit("map/SET_SEARCH", {
+                    value: "",
+                    latlng: null,
+                    type: ""
+                });
+            });
+            if (this.$route.query.address !== undefined) {
+                this.places.setVal(this.$route.query.address);
+                this.$store.commit("map/SET_SEARCH", {
+                    value: this.$route.query.address,
+                    type: "address",
+                    latlng: {lat: this.$route.query.lat, lng: this.$route.query.lng}
+                })
+            }
+        },
+    };
 </script>
 

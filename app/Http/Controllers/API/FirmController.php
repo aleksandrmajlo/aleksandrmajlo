@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Banner;
 use App\Firm;
 use App\Upload;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
+use Illuminate\Support\Facades\DB;
 
 class FirmController extends Controller
 {
@@ -43,21 +45,36 @@ class FirmController extends Controller
                 ];
             }
         }
-        return response()->json(['firms' => $res]);
+        $banner_home=Banner::select('photobig','photosmall','link','description')->find(1);
+        $banner_top=Banner::select('photobig','photosmall','link','description')->find(2);
+        $banner_bottom=Banner::select('photobig','photosmall','link','description')->find(3);
+
+        return response()->json([
+            'firms' => $res,
+            'banner_home'=>$banner_home,
+            'banner_bottom'=>$banner_bottom,
+            'banner_top'=>$banner_top,
+        ]);
+
     }
     // получение одиночной фирмы
     public function getFirm(Request $request)
     {
         $id = $request->id;
         try {
-            // $firm_type=config('firm_type');
-            $firm = Firm::select('id', 'title', 'address', 'type', 'time_work', 'service', 'email', 'phone', 'meta_title', 'meta_description', 'location', 'photos')->findOrFail($id);
+            $firm = Firm::select('id', 'title', 'address', 'type', 'time_work', 'service', 'email', 'phone', 'meta_title', 'meta_description', 'location', 'photos','status')->findOrFail($id);
+             if($firm->status===0){
+                 return response()->json(['error' => trans('validation.notFirm')], 404);
+             }
             $firm->photos = $firm->allphotos;
             $firm->rating=intval($firm->ratingsAvg());
             $lat = $firm->location->getLat();
             $lng = $firm->location->getLng();
+
             $coord = $lat . "_" . $lng;
             $firm->coord=$coord;
+            $firm->lat_lng=['lat'=>$lat,'lng'=>$lng];
+            $firm->others = DB::select("SELECT id,title FROM firms WHERE st_distance_sphere(location, POINT('$lng',$lat)) <= 100 AND id!=".$id." AND status=1 ORDER BY id DESC");
 
             return response()->json(
                 [

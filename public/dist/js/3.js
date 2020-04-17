@@ -30,12 +30,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "NotFound",
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
-    showMapYesNoSidebar: 'map/showMapYesNoSidebar'
+    showMapYesNoSidebar: "map/showMapYesNoSidebar"
   }))
 });
 
@@ -69,7 +68,7 @@ var render = function() {
         }
       ],
       staticClass:
-        "sidebarLeft sidebarLeft--md section container-fluid features "
+        "sidebarLeft sidebarLeft--md section container-fluid features"
     },
     [
       _c(
@@ -77,7 +76,7 @@ var render = function() {
         { staticClass: "panel-block panel-block--md border border-primary" },
         [
           _c("h3", { staticClass: "text-center" }, [
-            _vm._v("\n            " + _vm._s(_vm.$t("page_not")) + "\n        ")
+            _vm._v(_vm._s(_vm.$t("page_not")))
           ]),
           _vm._v(" "),
           _c(
@@ -90,13 +89,7 @@ var render = function() {
                   staticClass: "btn btn-outline-primary",
                   attrs: { to: { name: "home" } }
                 },
-                [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(_vm.$t("go_home")) +
-                      "\n            "
-                  )
-                ]
+                [_vm._v(_vm._s(_vm.$t("go_home")))]
               )
             ],
             1

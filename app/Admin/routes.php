@@ -20,4 +20,7 @@ Route::group([
 
     $router->resource('photos', PhotoController::class);
 
+    $router->get('banners', 'BannerController@index');
+    $router->post('banners', 'BannerController@update');
+
 });

@@ -19,9 +19,8 @@
                     <a href="#"></a>
                 </div>
             </div>
-            <div class="panel-block__footer">
-                <img :src="banners" alt/>
-            </div>
+            <banner-botom ></banner-botom>
+
         </div>
     </div>
 </template>
@@ -31,7 +30,7 @@
     import DropzoneComp from "~/components/Dropzone/DropzoneComp.vue";
     import ReviewStars from "~/components/Firm/ReviewStars.vue";
     import Photos from "~/components/Firm/Photos.vue";
-
+    import BannerBotom from '~/components/Banner/BannerBotom';
     export default {
         name: "AddReview",
         data() {
@@ -43,11 +42,10 @@
                 error:""
             };
         },
-        components: {ReviewStars, DropzoneComp, Photos},
+        components: {ReviewStars, DropzoneComp, Photos,BannerBotom},
         computed: {
             ...mapGetters({
                 showMapYesNoSidebar: "map/showMapYesNoSidebar",
-                banners: "firms/banners",
                 user: "auth/user"
             }),
 

@@ -112,11 +112,8 @@
       <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
       <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
       <path value="$PROJECT_DIR$/vendor/laravel-admin-ext/latlong" />
-      <path value="$PROJECT_DIR$/vendor/maxmind-db/reader" />
-      <path value="$PROJECT_DIR$/vendor/stevebauman/location" />
-      <path value="$PROJECT_DIR$/vendor/geoip2/geoip2" />
-      <path value="$PROJECT_DIR$/vendor/maxmind/web-service-common" />
       <path value="$PROJECT_DIR$/vendor/nagy/laravel-rating" />
+      <path value="$PROJECT_DIR$/vendor/algolia/algoliasearch-client-php" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />

@@ -30,7 +30,7 @@
                     <span class="invalid-feedback" v-if="has_error && errors.email">{{ errors.email[0] }}</span>
                 </div>
                 <button class="btn btn-primary btn-lg btn-block" type="submit">{{$t('button_reg')}}</button>
-                <router-link class="btn btn-primary btn-lg btn-block btn-reset" to="/">{{$t('cancel_reg')}}</router-link>
+                <router-link @click.native="clickRouterLinkActive" class="btn btn-primary btn-lg btn-block btn-reset" to="/">{{$t('cancel_reg')}}</router-link>
             </form>
             <p  v-if="success">
                 Вы зарегистрировались.Войдите под своим логином
@@ -56,15 +56,15 @@
                 success: false
             }
         },
-        created() {
-            if (this.$route.name == 'register') this.isShow = true;
-        },
         watch: {
-            '$route'(to, from) {
-                if (to.name == 'register') {
-                    this.isShow = true;
-                } else {
-                    this.isShow = false;
+            $route: {
+                immediate: true,
+                handler(to, from) {
+                    if (to.name == 'register') {
+                        this.isShow = true;
+                    } else {
+                        this.isShow = false;
+                    }
                 }
             }
         },

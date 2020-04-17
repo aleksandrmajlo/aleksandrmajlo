@@ -45,9 +45,9 @@
                     </div>
                 </div>
             </div>
-            <div class="panel-block__footer">
-                <img :src="banners" alt=""/>
-            </div>
+
+            <banner-botom ></banner-botom>
+
         </div>
     </div>
 </template>
@@ -57,6 +57,7 @@
     import TimeWork from "~/components/Firm/TimeWork";
     import ReviewStars from "~/components/Firm/ReviewStars.vue";
     import Photos from "~/components/Firm/Photos.vue";
+    import BannerBotom from '~/components/Banner/BannerBotom';
     export default {
         name: "Review",
         data() {
@@ -69,12 +70,12 @@
                 error_text: "",
             };
         },
-        components: {TimeWork,ReviewStars,Photos},
+        components: {TimeWork,ReviewStars,Photos,BannerBotom},
         computed: {
             ...mapGetters({
                 showMapYesNoSidebar: "map/showMapYesNoSidebar",
                 check: "auth/check",
-                banners: "firms/banners"
+
             }),
         },
         watch: {

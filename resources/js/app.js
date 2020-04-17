@@ -1,4 +1,3 @@
-import 'es6-promise/auto'
 import Vue from 'vue'
 window.Vue = Vue
 
@@ -11,6 +10,7 @@ import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
 if (process.env.NODE_ENV === 'production') {
     axios.defaults.baseURL = `https://wikirent.info/api`
+    // axios.defaults.baseURL = `/api`
 } else {
     axios.defaults.baseURL = `/api`
 }
@@ -26,13 +26,13 @@ import VueAuth from '@websanova/vue-auth'
 import auth from './auth'
 Vue.use(VueAuth, auth)
 
-
 // миксин
 import GlobalMixin from './mixin/mixin'
 Vue.mixin(GlobalMixin);
 
-
-
+//Loading
+import Loading from 'vue-loading-overlay';
+Vue.use(Loading);
 
 // Lang
 import i18n from '~/plugins/i18n'
@@ -43,8 +43,6 @@ import store from '~/store'
 // show-side
 import VShowSlide from 'v-show-slide'
 Vue.use(VShowSlide)
-
-
 
 
 // popup
@@ -84,23 +82,18 @@ Vue.use(VueGoogleMaps, {
 //шина
 // export const eventBus = new Vue();
 
-
 Vue.component('LoginBlock', require('./components/Auth/LoginBlock.vue').default);
 Vue.component('RegistrarBlock', require('./components/Auth/RegistrarBlock.vue').default);
 Vue.component('LangButton', require('./components/LangButton/LangButton.vue').default);
-Vue.component('Flag', require('./components/LangButton/Flag.vue').default);
-
 Vue.component('MapBlock', require('./components/Map/MapBlock.vue').default);
 Vue.component('GeolocationMy', require('./components/Map/GeolocationMy.vue').default);
-
 Vue.component('SearchBlock', require('./components/Search/SearchBlock.vue').default);
 
-// Vue.config.productionTip = false
+Vue.config.productionTip = false
 
 const app = new Vue({
     el: '#app',
     i18n,
     router,
     store,
-
 });

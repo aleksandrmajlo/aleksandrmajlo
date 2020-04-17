@@ -77,17 +77,6 @@ class UploadImagesController extends Controller
         return Response::json(['message' => 'File successfully delete'], 200);
     }
 
-    // получить фото для вывода в заголовке
-    public function getLink(Request $request){
-        $filename = $request->name;
-        $uploaded_image = Upload::where('original_name', basename($filename))->latest('id')->first();
-        $resized_file = $this->photos_path . '/' . $uploaded_image->resized_name;
-        if (file_exists($resized_file)) {
-            return Response::json([
-                'link' => env('APP_URL').'/upload/'.$uploaded_image->resized_name
-            ], 200);
-        }
-        return Response::json(['err'=>true]);
-    }
+
 
 }

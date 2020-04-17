@@ -1,194 +1,206 @@
 <template>
-    <div>
-        <!--         <pre style="margin-bottom: 20px;">{{firms}}</pre>-->
-        <l-map
-            ref="map"
-            class="map"
-            :zoom="zoom"
-            :center="center"
-            :attributionControl="false"
-            :scrollWheelZoom="false"
-        >
-            <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
-            <l-control-zoom position="bottomright"></l-control-zoom>
-        </l-map>
-    </div>
+    <div id="map" class="map"></div>
 </template>
-
 <script>
+    const geolocation_marker = {
+        en:'You are a few meters from this point.',
+        ru:'Вы находитесь в нескольких метрах от этой точки.',
+        uk:'Ви перебуваєте в декількох метрах від цієї точки.',
+    }
     import {mapGetters} from "vuex";
     import L from "leaflet";
-    import {LMap, LTileLayer, LMarker, LControlZoom} from "vue2-leaflet";
-    //scrollWheelZoom.enable()
-
     export default {
         name: "LmapBlock",
         data() {
             return {
+                map: null,
+                firms: null,
                 mapMarker: [],
-                searchMarker: null
+                searchMarker: null,
             };
-        },
-        props: ["firms"],
-        components: {
-            LMap,
-            LTileLayer,
-            LMarker,
-            LControlZoom
         },
         computed: {
             ...mapGetters({
                 zoom: "map/zoom",
                 center: "map/center",
-                search_latlng: "map/search_latlng",
-                search_address: "map/search_address",
-                user_position: "map/user_position",
-                radius: "map/radius",
-            }),
 
+                search: "map/search",
+                user_position: "map/user_position",
+                locale: "lang/locale",
+            }),
+            currentRouteName() {
+                return this.$route.name;
+            }
         },
         watch: {
-            search_latlng(val) {
-                if (val.lat === 0) {
-                    this.removeMarker();
-                    this.findBestZoom();
-                } else {
+            search(newVal,oldVal){
+                if(this.search.latlng===null){
+                    this.removeSearchMarker();
+                }else{
+                    this.removeSearchMarker();
                     this.addMarkerSearch();
                 }
             },
-            firms(newVal) {
-                this.addMarker();
-                this.findBestZoom();
-            },
             user_position() {
+
                 if (this.user_position.lat !== null && this.user_position.lng !== null) {
-                    L.marker(this.user_position).addTo(this.$refs.map.mapObject)
-                        .bindPopup("Вы находитесь в нескольких метрах от этой точки").openPopup();
-                    // L.circle(this.user_position, this.radius).addTo(this.$refs.map.mapObject);
-                    this.$refs.map.mapObject.setView(this.user_position, 13, {"animate": false})
+                    let marker=L.marker(this.user_position)
+                        .addTo(this.map)
+                        .bindPopup(geolocation_marker[this.locale])
+                        .openPopup();
+                    marker.on("mouseover", function (e) {
+                        this.openPopup();
+                    });
+                    marker.on("mouseout", function (e) {
+                        this.closePopup();
+                    });
+                    L.circle(this.user_position, 150).addTo(this.map);
+                    this.map.setView(this.user_position, 12, {
+                        animate: true
+                    });
                 }
             }
         },
         mounted() {
             let app = this;
-            this.$refs.map.mapObject.on('click', function (e) {
-                app.$store.commit('map/MAPSHOWHIDDENSIDEBAR')
+            //**********************
+            this.map = L.map("map", {
+                attributionControl: false,
+                zoomControl: false
+            }).setView(this.center, this.zoom);
+            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                attribution:
+                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(this.map);
+            //************************************
+            L.control
+                .zoom({
+                    position: "bottomright"
+                })
+                .addTo(this.map);
+            this.$store.dispatch("firms/getGoordFirms").then(() => {
+                this.firms = this.$store.getters["firms/coord_firms"];
+                this.addMarker();
             });
-
+            this.map.on("click", function (e) {
+                app.$store.commit("map/ROUTERSHOWHIDDENSIDEBAR", false);
+            });
         },
         methods: {
-
             addMarker() {
                 this.mapMarker = [];
                 let app = this;
                 for (let key in this.firms) {
-                    let coord=[];
-                    let title="";
-                    // let id=[];
-                    let address="";
-                    let  firms=this.firms[key];
-                    for (let index = 0; index < firms.length; index++) {
+                    let coord = [];
+                    let title = "";
+                    let address = "";
+                    let firms = this.firms[key];
+                    let ids = [];
+                    let len=firms.length;
+                    for (let index = 0; index <len ; index++) {
                         const element = firms[index];
-                        if(index===0){
-                            address=element.address;
-                            coord=element.coord
+                        if (index === 0) {
+                            address = element.address;
+                            coord = element.coord;
                         }
-                        title+='<a class="setObject" data-key="'+key+'" data-id="'+element.id+'" href="#">'+element.title+'</a><br>';
-                        // id.push(element.id)
+                        let koma=" ";
+                        if(index!==(len-1))koma=", ";
+                        title +=
+                            '<a class="setObject" data-key="' +
+                            key +
+                            '" data-id="' +
+                            element.id +
+                            '" href="#">' +
+                            element.title +
+                            "</a>"+koma;
+                        ids.push(element.id);
                     }
                     let marker = L.marker(coord, {
                         title: address,
                         alt: address,
-                        // id: firm.id
+                        ids: ids.join()
                     });
-                    marker.bindPopup('<p class="text-center"><strong>' +  title+ '</strong></p><p>' + address + '</p>');
-                    marker.addTo(app.$refs.map.mapObject);
-                    app.mapMarker.push(marker)
-                }
-                $('body').on('click','.setObject',function (e) {
-                    e.preventDefault();
-                    let id=$(this).data('id')
-                    app.$router.push({ name: 'object', params: { id: id } })
-                    let key=$(this).data('key');
-                    let coord=app.firms[key][0].coord;
-                    app.scrollToCoord(coord);
-                })
-                /* ***********************
-
-                this.mapMarker = [];
-                let app = this;
-                for (let index = 0; index < this.firms.length; index++) {
-                    const firm = this.firms[index];
-                    let lat = firm.latlng.lat;
-                    let lng = firm.latlng.lng;
-                    let marker = L.marker([lat, lng], {
-                        title: firm.title,
-                        alt: firm.address,
-                        id: firm.id
-                    });
-                    marker.bindPopup('<p class="text-center"><strong>' + firm.title + '</strong></p><p>' + firm.address + '</p>');
-                    marker.on('mouseover', function (e) {
-                        this.openPopup()
-                    });
-                    marker.on('mouseout', function (e) {
-                        this.closePopup()
-                    });
+                    marker.bindPopup(
+                        '<strong>' +
+                        title +
+                        "</strong><p>" +
+                        address +
+                        "</p>"
+                    );
+                    marker.addTo(app.map);
                     marker.on("click", function (e) {
-                        app.$router.push({name: 'object', params: {id: e.target.options.id}})
+                        let ids = e.target.options.ids;
+                        let ob_ids = ids.split(",");
+                        app.$store.commit("map/ROUTERSHOWHIDDENSIDEBAR", true);
+                        app.$router.push({name: "object", params: {id: ob_ids[0]}});
                     });
-                    marker.addTo(this.$refs.map.mapObject);
-                    this.mapMarker.push(marker);
-
-                    }
-                    */
+                    marker.on("mouseover", function (e) {
+                        this.openPopup();
+                    });
+                    marker.on("mouseout", function (e) {
+                        this.closePopup();
+                    });
+                    app.mapMarker.push(marker);
+                }
+                $("body").on("click", ".setObject", function (e) {
+                    e.preventDefault();
+                    let id = $(this).data("id");
+                    app.$router.push({name: "object", params: {id: id}});
+                    let key = $(this).data("key");
+                    let coord = app.firms[key][0].coord;
+                    app.scrollToCoord(coord);
+                });
             },
             addMarkerSearch() {
-                this.searchMarker = L.marker([this.search_latlng.lat, this.search_latlng.lng], {
-                    title: this.search_address,
+                var LeafIcon = L.icon({
+                    iconUrl: "/img/placealtadd.svg",
+                    iconSize: [40, 40]
                 });
-                this.searchMarker.addTo(this.$refs.map.mapObject);
-                this.$refs.map.mapObject.setView([this.search_latlng.lat, this.search_latlng.lng], 15, {
-                    "animate": false,
-                    "pan": {
-                        "duration": 10
+                this.searchMarker = L.marker(
+                    [this.search.latlng.lat, this.search.latlng.lng],
+                    {
+                        icon: LeafIcon,
+                        title: this.search.value
                     }
-                })
-
+                );
+                this.searchMarker.bindPopup(
+                    '<p class="text-center">' +
+                        '<strong>' +
+                            this.search.value +
+                        '</strong>' +
+                    '</p>'
+                );
+                this.searchMarker.addTo(this.map);
+                this.map.setView([this.search.latlng.lat, this.search.latlng.lng], 14, {
+                    animate: false,
+                    pan: {
+                        duration: 10
+                    }
+                });
+                this.searchMarker.openPopup();
             },
-            removeMarker() {
-                this.$refs.map.mapObject.removeLayer(this.searchMarker);
-                this.searchMarker = null;
+            removeSearchMarker() {
+                if (this.searchMarker !== null) {
+                    this.map.removeLayer(this.searchMarker);
+                    this.searchMarker = null;
+                }
             },
             findBestZoom() {
                 if (this.mapMarker.length > 0) {
                     var featureGroup = L.featureGroup(this.mapMarker);
-                    this.$refs.map.mapObject.fitBounds(featureGroup.getBounds().pad(0.1), {
+                    this.map.fitBounds(featureGroup.getBounds().pad(0.1), {
                         animate: false
                     });
                 }
             },
-            scrollToCoord(coord){
-                this.$refs.map.mapObject.setView(coord, 15, {
-                    "animate": false,
-                    "pan": {
-                        "duration": 10
+            scrollToCoord(coord) {
+                this.map.setView(coord, 15, {
+                    animate: false,
+                    pan: {
+                        duration: 10
                     }
-                })
+                });
             }
-            /*
-            onLocationFound(e) {
-                console.log(333333333)
-                var radius = e.accuracy;
-                L.marker(e.latlng).addTo(this.$refs.map.mapObject)
-                    .bindPopup("You are within " + radius + " meters from this point").openPopup();
-                L.circle(e.latlng, radius).addTo(this.$refs.map.mapObject);
-            },
-            onLocationError(e) {
-                console.log(2222222)
-                this.showShwal('warning',e.message)
-            }
-             */
-
         }
     };
 </script>

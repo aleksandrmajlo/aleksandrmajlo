@@ -6,8 +6,9 @@
 
 // Bootstrap
 // @import '~bootstrap/scss/bootstrap';
-@import "~leaflet/dist/leaflet.css";
 @import "~vue2-dropzone/dist/vue2Dropzone.min.css";
+@import '~vue-loading-overlay/dist/vue-loading.css';
+@import '~sweetalert2/dist/sweetalert2.min.css';
 
 #dropzone {
     border-radius: .625rem !important;
@@ -21,49 +22,6 @@
     .dropzone .dz-message {
         margin: 1em 0 !important;
     }
-}
-
-.ap-nostyle-dropdown-menu {
-    border-radius: 0 0 .625rem .625rem;
-    border: 1px solid rgb(81, 158, 235);
-    background-color: rgb(255, 255, 255);
-
-    &>div {
-        .ap-nostyle-suggestions {
-            .ap-nostyle-suggestion {
-                display: block;
-                margin-bottom: .5rem;
-                border-bottom: 1px solid rgb(190, 215, 241);
-                text-decoration: none !important;
-                cursor: pointer;
-
-                .ap-suggestion-icon {
-                    display: none !important;
-                }
-            }
-        }
-    }
-}
-
-.search-block__input-wrap {
-
-    .search-block__input {
-        color: #fff !important
-    }
-
-    span.algolia-places-nostyle {
-        width: 100%;
-    }
-
-    .ap-nostyle-icon-pin,
-    .ap-nostyle-icon-clear {
-        display: none !important;
-    }
-}
-
-.ap-footer {
-    display: none !important;
-    visibility: hidden !important;
 }
 
 
@@ -142,4 +100,73 @@ svg.icon-arrow-alt-circle-down.close_firm {
     margin-left: .3125rem;
     transition: all .36s;
     cursor: pointer;
+}
+
+input#searchInput {
+    color: #fff !important;
+}
+
+.myDropDown {
+    display: none !important;
+    max-height: calc(100vh - 50px);
+    overflow-y: auto;
+
+    a {
+        img {
+            max-width: 1rem;
+        }
+    }
+}
+
+.myDropDown.activeSearch {
+    display: block !important;
+    transform: translateY(0) !important;
+
+}
+
+#searchTitleDescop {
+    z-index: 1;
+}
+
+.searcBlockPlace {
+    .search-block__input {
+        // margin-left: 0;
+    }
+}
+
+.search-block ::placeholder {
+    color: #fff;
+}
+
+.searcBlockPlace {
+    .ap-footer {
+        display: none !important;
+    }
+
+    button.ap-input-icon.ap-icon-clear,
+    button.ap-input-icon.ap-icon-pin {
+        svg {
+            fill: rgb(81, 158, 235) !important;
+        }
+
+    }
+
+    input.is-invalid {
+        background-position: right calc(.375em + 2.1875rem) center !important;
+    }
+}
+
+.otherLinkMinimum,
+.firm_others {
+    border-bottom: 1px solid rgb(236, 245, 255);
+    display: block;
+
+    a {
+        display: block;
+        margin-bottom: 5px;
+    }
+}
+
+[v-cloak] {
+    display: none;
 }

@@ -70,8 +70,8 @@
             },
             remove(file, error, xhr) {
                 axios.post("images-delete", {name: file.name}).then(response => {
-                    // let files = this.$refs.myVueDropzone.getAcceptedFiles();
-                    // this.$emit('SetImagesChild', files)
+                    let files = this.$refs.myVueDropzone.getAcceptedFiles();
+                    this.$emit('SetImagesChild', files)
                 });
             }
         }

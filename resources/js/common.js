@@ -88,7 +88,8 @@ function eventHandler() {
     // JSCCommon.modalCall();
     JSCCommon.tabscostume('tabs');
     // JSCCommon.mobileMenu();
-    $(".main-wrapper").after('<div class="screen" style="background-image: url(/screen/main.jpg);"></div>'); // /добавляет подложку для pixel perfect
+    // $(".main-wrapper").after('<div class="screen" style="background-image: url(/screen/main.jpg);"></div>'); // /добавляет подложку для pixel perfect
+
     function heightses() {
         var w = $(window).width(); // $(".main-wrapper").css("margin-bottom", $('footer').height())
         var topH = $("header ").innerHeight();
@@ -140,10 +141,12 @@ $(document).ready(function () {
     });
 
     $('.toggle-menu-mobile_my').click(function (e) {
+
         e.preventDefault();
         $('.toggle-menu-mobile_my').toggleClass('on');
         $(".menu-mobile--js").toggleClass("active");
         $('body').toggleClass("fixed");
+
     })
 
 });

@@ -31,7 +31,9 @@ class FirmController extends Controller
     {
         $grid = new Grid(new Firm());
         $grid->column('id', __('Id'))->sortable();
+
         $grid->column('status')->switch();
+
         $grid->column('title', __('Название'))->sortable();;
         $grid->column('address', __('Адрес'))->sortable();;
         $grid->column('service', __('Сервис'))->sortable();;

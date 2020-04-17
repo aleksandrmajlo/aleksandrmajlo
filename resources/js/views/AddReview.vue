@@ -16,11 +16,11 @@
                 </div>
 
                 <div class="form-group">
-          <textarea
-              class="form-control border-dotted"
-              v-model="comment"
-              placeholder="Добавьте описание"
-          ></textarea>
+                  <textarea
+                     class="form-control border-dotted"
+                     v-model="comment"
+                     placeholder="Добавьте описание"
+                   ></textarea>
                 </div>
                 <dropzone-comp ref="upload" v-on:SetImagesChild="SetImages"></dropzone-comp>
                 <button :disabled="isDisabled" @click.prevent="sendReview" class="panel-block__btn-add" type="submit">
@@ -33,9 +33,7 @@
                     <a href="#"></a>
                 </div>
             </div>
-            <div class="panel-block__footer">
-                <img :src="banners" alt/>
-            </div>
+            <banner-botom ></banner-botom>
         </div>
     </div>
 </template>
@@ -45,7 +43,7 @@
     import DropzoneComp from "~/components/Dropzone/DropzoneComp.vue";
     import ReviewStars from "~/components/Firm/ReviewStars.vue";
     import Photos from "~/components/Firm/Photos.vue";
-
+    import BannerBotom from '~/components/Banner/BannerBotom';
     export default {
         name: "AddReview",
         data() {
@@ -57,11 +55,10 @@
                 isDisabled: false
             };
         },
-        components: {ReviewStars, DropzoneComp, Photos},
+        components: {ReviewStars, DropzoneComp, Photos,BannerBotom},
         computed: {
             ...mapGetters({
                 showMapYesNoSidebar: "map/showMapYesNoSidebar",
-                banners: "firms/banners",
                 user: "auth/user"
             }),
         },

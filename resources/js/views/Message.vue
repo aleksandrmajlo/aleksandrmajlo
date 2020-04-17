@@ -1,12 +1,12 @@
 <template>
     <div
         v-show-slide:400:ease="showMapYesNoSidebar"
-        class="sidebarLeft sidebarLeft--md section container-fluid features"
+        class="sidebarLeft sidebarLeft--md section container-fluid "
         id="sidebarLeft"
     >
         <div class="panel-block panel-block--md border border-primary">
             <div class="panel-block__body">
-                <h2 class="text-center">Избранное</h2>
+                <h2 class="text-center">Сообщение</h2>
             </div>
             <banner-botom></banner-botom>
         </div>
@@ -19,7 +19,7 @@
     import BannerBotom from '~/components/Banner/BannerBotom';
 
     export default {
-        name: "Favorite",
+        name: "Message",
         computed: {
             ...mapGetters({
                 showMapYesNoSidebar: "map/showMapYesNoSidebar"

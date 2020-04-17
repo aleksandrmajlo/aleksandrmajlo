@@ -10,13 +10,7 @@
         name: "GeolocationMy",
         methods:{
             user_position(){
-                let app=this;
-                navigator.geolocation.getCurrentPosition(function (position) {
-                        app.$store.commit('map/USERPOSITION',{coords:{lat:position.coords.latitude,lng:position.coords.longitude},radius:position.coords.accuracy})
-                    },
-                    function (error) {
-                        console.log("The Locator was denied. :(")
-                    })
+                this.$store.dispatch('map/Geolocation')
             }
         }
     }

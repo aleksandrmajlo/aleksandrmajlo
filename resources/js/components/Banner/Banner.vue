@@ -1,15 +1,17 @@
-<template functional>
-    <div class="panel-block__footer d-lg-none">
-        <img src="/img/@2x/banner-sm.jpg" alt=""/>
-    </div>
+<template>
+  <a v-if="banner!==null" class="promoBanner" target="_blank" :href="banner.link">
+    <span class="promoBanner__text">{{banner.description}}</span>
+    <img :src="banner.photobig" alt />
+  </a>
 </template>
-
 <script>
-    export default {
-        name: "Banner.vue"
-    }
+import { mapGetters } from "vuex";
+export default {
+  name: "Banner.vue",
+  computed: {
+    ...mapGetters({
+      banner: "firms/banner_home"
+    })
+  }
+};
 </script>
-
-<style scoped>
-
-</style>

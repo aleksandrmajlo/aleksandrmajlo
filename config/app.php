@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'ru',
+    'locale' => 'uk',
     'locales' => [
         'uk' => 'UA',
         'ru' => 'RU',
@@ -110,7 +110,6 @@ return [
     | localized telephone numbers, street address information and more.
     |
     */
-
     'faker_locale' => 'en_US',
 
     /*
@@ -123,11 +122,8 @@ return [
     | will not be safe. Please do this before deploying an application!
     |
     */
-
     'key' => env('APP_KEY'),
-
     'cipher' => 'AES-256-CBC',
-
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -199,7 +195,6 @@ return [
     */
 
     'aliases' => [
-
         'App' => Illuminate\Support\Facades\App::class,
         'Arr' => Illuminate\Support\Arr::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,

@@ -19,7 +19,6 @@ class AuthController extends Controller
             'password'  => 'required|min:6|confirmed',
             'name'  => 'required',
         ]);
-
         if ($v->fails())
         {
             return response()->json([
@@ -27,13 +26,11 @@ class AuthController extends Controller
                 'errors' => $v->errors()
             ], 422);
         }
-
         $user = new User;
         $user->email = $request->email;
         $user->name = $request->name;
         $user->password = bcrypt($request->password);
         $user->save();
-
         return response()->json(['status' => 'success'], 200);
     }
 
@@ -41,9 +38,8 @@ class AuthController extends Controller
     {
         $v = Validator::make($request->all(), [
             'email' => 'required|email',
-            'password'  => 'required',
+            'password'  => 'required|string',
         ]);
-//        dump($request->password);
         if ($v->fails())
         {
             return response()->json([
@@ -51,8 +47,8 @@ class AuthController extends Controller
                 'errors' => $v->errors()
             ], 422);
         }
-
-        $credentials = $request->only('email', 'password');
+//        $credentials = $request->only('email', 'password');
+        $credentials=['email' => $request->email, 'password' => $request->password, 'status' => 1];
 
         if ($token = $this->guard()->attempt($credentials)) {
 
@@ -101,4 +97,7 @@ class AuthController extends Controller
     {
         return Auth::guard();
     }
+
+
+
 }

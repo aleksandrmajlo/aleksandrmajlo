@@ -8,6 +8,9 @@
    "page_not":"404",
    "go_home":"Go home",
 
+   "search_placholder":"начните вводить адрес от 3 символов",
+   
+   "search_not_found":"Not found",
 
    "ob_add":"Add a object",
    "ob_review":"Review",
@@ -45,7 +48,7 @@
    "daySA":"SA",
    "daySU":"SU",
 
- "search":"поск при добавлении ",
+ "search":"enter city, street, house and select an address from the list ",
 
  "errorAddFirm":"Заповніть обов'язкові поля і вкажіть адресу в рядку пошуку",
  "successAddFirm":"Object added and will be published after verification.",
@@ -80,7 +83,9 @@
  "rating_check":"Отзыв будет опубликован после проверки администратором",
  "photos_add_error":"Загрузите фото",
 
- "ALL_EROOR":"Что то пошло не так.Повторите чуть позже"
+ "ALL_EROOR":"Что то пошло не так.Повторите чуть позже",
+
+ "geolocation_marker":"You are a few meters from this point."
 
 
 }

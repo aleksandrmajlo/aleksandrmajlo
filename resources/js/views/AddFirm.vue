@@ -1,21 +1,17 @@
 <template>
-    <div  v-show-slide:400:ease="showMapYesNoSidebar"  class="sidebarLeft sidebarLeft--lg section container-fluid features" id="sidebarLeft">
-        <div   class=" panel-block panel-block--lg border border-primary-light">
+    <div
+        v-show-slide:400:ease="showMapYesNoSidebar"
+        class="sidebarLeft sidebarLeft--lg section container-fluid"
+        id="sidebarLeft">
+        <div class="panel-block panel-block--lg border border-primary-light">
             <div class="row-head row no-gutters bg-primary-light text-white">
-                <div class="col-lg-6" v-show="isTitleFoto">
+                <div class="col-lg-6">
                     <div class="panel-block__head bg-wrap">
-                        <img class="img-bg object-fit-js 99999" :src="photo" alt/>
+                        <img class="img-bg object-fit-js" :src="photo" alt/>
                         <div class="panel-block__head-title">{{title}}</div>
                     </div>
                 </div>
-                <div class="col-6 d-none d-lg-block">
-                    <a class="head-banner" href="#">
-            <span class="head-banner__img-wrap">
-              <img src="/img/@1x/img-without.jpg" alt/>
-            </span>
-                        <span class="head-banner__text">Самая эффективная реклама вашего бизнеса</span>
-                    </a>
-                </div>
+                <banner-top v-if="showMapYesNoSidebar"></banner-top>
             </div>
             <div class="panel-block__body">
                 <div class="panel-block__link-add panel-block__link-add--title">
@@ -25,15 +21,17 @@
                     </svg>
                 </div>
                 <div class="row">
+                    <div class="col-lg-12">
+                        <search-places :isValid="isValidaddress"></search-places>
+                    </div>
                     <div class="col-lg-6">
                         <div class="panel-block__input-wrap form-group">
-                            <input
-                                class="panel-block__input form-control border-dotted"
-                                :class="{'is-invalid':titleInValid}"
-                                type="text"
-                                v-model="firm.title"
-                                :placeholder="$t('ob_name_ob')"
-                                name="text"
+                            <input class="panel-block__input form-control border-dotted"
+                                   :class="{'is-invalid':titleInValid}"
+                                   type="text"
+                                   v-model="firm.title"
+                                   :placeholder="$t('ob_name_ob')"
+                                   name="text"
                             />
                         </div>
                         <div class="panel-block__input-wrap form-group">
@@ -95,7 +93,7 @@
                                 :placeholder="$t('ob_email_ob')"
                             />
                         </div>
-                        <dropzone-comp ref="upload" v-on:SetImagesChild="SetImages"></dropzone-comp>
+                        <dropzone-comp ref="upload" @SetImagesChild="SetImages"></dropzone-comp>
                     </div>
                     <div class="col-lg-6 d-flex flex-column">
                         <div
@@ -103,7 +101,6 @@
                         >
                             <div class="accordion-item__toggle accordion-item__toggle--js">{{$t('ob_time')}}</div>
                             <div class="accordion-item__dropdown accordion-item__dropdown--js">
-
                                 <table>
                                     <tr>
                                         <td>{{$t('dayMo')}}</td>
@@ -296,23 +293,23 @@
                     <a class="tdn" href="#">{{$t('ob_back')}}</a>
                 </div>
             </div>
-            <div class="panel-block__footer d-lg-none">
-                <img :src="banners" alt/>
-            </div>
+            <banner-botom classNone="d-lg-none"></banner-botom>
         </div>
     </div>
 </template>
-
 <script>
     import {mapGetters} from "vuex";
     import DropzoneComp from "~/components/Dropzone/DropzoneComp.vue";
+    import SearchPlaces from "~/components/Search/SearchPlaces.vue";
+    import BannerBotom from "~/components/Banner/BannerBotom";
+    import BannerTop from "~/components/Banner/BannerTop";
 
+    const DefaultImage = "/img/@2x/2019-09-06.png";
     export default {
-        name: "Review",
+        name: "AddFirm",
         data() {
             return {
-                isTitleFoto: false, //открытие названия
-                photo: "/img/@2x/2019-09-06.png",
+                photo: DefaultImage,
                 firm: {
                     title: "",
                     service: "",
@@ -361,43 +358,22 @@
                     photos: []
                 },
                 titleInValid: false,
-                titleInService: false
+                titleInService: false,
+                isValidaddress: true
             };
         },
         computed: {
             title() {
-                if (this.$store.state.map.search.value !== "") this.isTitleFoto = true;
                 return this.$store.state.map.search.value;
             },
             ...mapGetters({
                 location: "map/search_latlng",
                 address: "map/search_address",
                 user: "auth/user",
-                showMapYesNoSidebar:'map/showMapYesNoSidebar',
-                banners: "firms/banners"
+                showMapYesNoSidebar: "map/showMapYesNoSidebar"
             })
         },
-
-        components:{DropzoneComp},
-        watch: {
-            "firm.photos": function (newVal) {
-                if (this.firm.photos.length > 0) {
-                    return axios
-                        .post("images-get", {name: this.firm.photos[0]})
-                        .then(response => {
-                            if (typeof response.data.err !== "undefined") {
-                                this.photo = "/img/@2x/2019-09-06.png";
-                            } else {
-                                this.isTitleFoto = true;
-                                this.photo = response.data.link;
-                            }
-                        });
-                } else {
-                    this.photo = "/img/@2x/2019-09-06.png";
-                }
-            }
-
-        },
+        components: {DropzoneComp, BannerBotom, BannerTop, SearchPlaces},
         mounted() {
             $(".accordion-item__toggle--js").click(function () {
                 $(this)
@@ -410,9 +386,14 @@
             });
         },
         methods: {
-            SetImages(images=false) {
-                if (!images){
-                    images=this.$refs.upload.getFieled();
+            SetImages(images = false) {
+                if (images && images.length > 0) {
+                    this.photo = images[0].dataURL;
+                } else {
+                    this.photo = DefaultImage;
+                }
+                if (!images) {
+                    images = this.$refs.upload.getFieled();
                 }
                 let img_ar = [];
                 images.forEach(img => {
@@ -427,7 +408,7 @@
                         firm: this.firm,
                         address: this.address,
                         location: this.location,
-                        user_id: this.user.id,
+                        user_id: this.user.id
                     };
                     axios({
                         method: "post",
@@ -438,29 +419,31 @@
                         data: data
                     })
                         .then(response => {
-                            if(typeof response.data.error!=="undefined"){
-                                this.showShwal( "error",response.data.error)
-                            }else{
-                                this.showShwal( "success",this.$t('successAddFirm'))
-                                this.$router.push({name: 'search'});
-                                //обнуление поиска
-                                $('#my-input-search').val('')
-                                this.$store.commit('map/SET_SEARCH', {
+                            if (typeof response.data.error !== "undefined") {
+                                this.showShwal("error", response.data.error);
+                            } else {
+                                this.showShwal("success", this.$t("successAddFirm"));
+                                //обнуление данных
+                                $("#my-input-search").val("");
+                                this.firm.photos = [];
+                                this.photo = DefaultImage;
+                                for (let [key, value] of Object.entries(this.firm)) {
+                                    if (key !== 'time_work' && key !== 'photos' && key !== 'type') {
+                                        this.firm[key] = "";
+                                    }
+                                }
+                                this.$store.commit("map/SET_SEARCH", {
                                     value: "",
                                     type: "",
-                                    latlng:{
-                                        lat: 0,
-                                        lng: 0
-                                    }
+                                    latlng: null
                                 });
-
                             }
                         })
                         .catch(error => {
-                            this.showShwal( "error",error)
+                            this.showShwal("error", error);
                         });
                 } else {
-                    this.showShwal( "error",this.$t("errorAddFirm"))
+                    this.showShwal("error", this.$t("errorAddFirm"));
                 }
             },
             valid() {
@@ -478,7 +461,10 @@
                     this.titleInService = false;
                 }
                 if (this.address == "") {
+                    this.isValidaddress = false;
                     valid = false;
+                } else {
+                    this.isValidaddress = true;
                 }
                 return valid;
             }
