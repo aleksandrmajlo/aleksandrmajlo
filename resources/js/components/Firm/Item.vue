@@ -8,7 +8,7 @@
         <div class="h5 fw-300 border-bottom border-light text-primary">{{firm.service}}</div>
         <div>
             <router-link
-                @click.native="clickRouterLinkActive"
+                @click.native="clickRouterLinkActive('auth')"
                 :to="'/addphoto/?id='+firm.id"
                 class="panel-block__link-add"
             >
@@ -40,7 +40,7 @@
                 </svg>
             </router-link>
             <router-link
-                @click.native="clickRouterLinkActive"
+                @click.native="clickRouterLinkActive('auth')"
                 class="panel-block__link-add"
                 :to="{name:'addobject',query:{address:firm.address,lat:firm.lat_lng.lat,lng:firm.lat_lng.lng}}"
             >
@@ -53,10 +53,11 @@
             <br/>
         </div>
 
-        <div v-if="firm.others&&firm.others.length<=5" class="otherLinkMinimum">
+        <div v-if="firm.others" class="otherLinkMinimum">
                    <router-link
                        @click.native="clickRouterLinkActive"
                        v-for="(other,index) in firm.others"
+                       v-if="index<5"
                        :key="other.id"
                        :to="{name:'object', params: { id: other.id }}"
                    >{{other.title}}</router-link>
@@ -76,6 +77,7 @@
             <router-link
                 @click.native="clickRouterLinkActive"
                 v-for="(other,index) in firm.others"
+                v-if="index>=5"
                 :key="other.id"
                 :to="{name:'object', params: { id: other.id }}"
             >{{other.title}}
@@ -92,15 +94,17 @@
         <review-stars :start_value="firm.rating" :disabled="true" classMy="  "></review-stars>
         <!--       рейтинг етв           -->
         <time-work v-if="firm.time_work" :time_value="firm.time_work"></time-work>
+        <favorite-item :firm="firm"></favorite-item>
     </div>
 </template>
 <script>
     import TimeWork from "~/components/Firm/TimeWork";
     import ReviewStars from "~/components/Firm/ReviewStars.vue";
+    import FavoriteItem from "~/components/Firm/FavoriteItem.vue";
 
     export default {
         name: "Item",
-        components: {TimeWork, ReviewStars},
+        components: {TimeWork, ReviewStars,FavoriteItem},
         props: {
             firm: {
                 type: Object,

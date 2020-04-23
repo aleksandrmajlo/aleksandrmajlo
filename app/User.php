@@ -51,11 +51,11 @@ class User extends Authenticatable implements JWTSubject
 
     public function firms()
     {
-        return $this->hasMany(\App\Firm::class);
+        return $this->hasMany(\App\Firm::class)->where('status', 1)->orderByDesc('id');
     }
     public function reviews()
     {
-        return $this->hasMany(\App\Review::class);
+        return $this->hasMany(\App\Review::class)->where('status', 1)->orderByDesc('id');
     }
 
 }

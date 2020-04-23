@@ -1,11 +1,25 @@
+import {mapGetters} from "vuex";
 export default {
+    data(){
+        return{
+            Login_required:{
+                ru:'Требуется логин',
+                uk:'Необхідний вхід',
+                en:'Login required'
+            }
+        }
+    },
+    computed:{
+        ...mapGetters({
+            locale:'lang/locale'
+        })
+    },
     methods: {
         showShwal(icon, text) {
             this.$swal.fire({
                 icon: icon,
                 text: text,
                 showConfirmButton: false,
-                closeOnClickOutside: false
             });
             setTimeout(() => {
                 this.$swal.close();
@@ -21,11 +35,11 @@ export default {
             let loader = this.$loading.show(res);
             return loader;
         },
-        clickRouterLinkActive(event){
-            // if($(event.target).hasClass('router-link-exact-active')){
-                this.$store.commit('map/ROUTERSHOWHIDDENSIDEBAR', true);
-            // }
-
+        clickRouterLinkActive(type = false) {
+            this.$store.commit('map/ROUTERSHOWHIDDENSIDEBAR', true);
+            if (type && type == 'auth' && !Vue.auth.check()) {
+                this.showShwal('error',this.Login_required[this.locale])
+            }
         }
     }
 }

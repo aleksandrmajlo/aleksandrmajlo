@@ -35,6 +35,14 @@ Route::group(['namespace' => 'API'], function () {
     Route::post('getReview', 'ReviewController@getReview');
     // поиск
     Route::get('search', 'SearchController@index');
+    // сохранение времени работы
+    Route::post('saveTimeWork', 'FirmController@saveTimeWork');
+    //пользователь
+    Route::post('my_review', 'UserController@my_review');
+    Route::post('my_firms', 'UserController@my_firms');
+    Route::post('my_favorite', 'UserController@my_favorite');
+    // form
+    Route::post('send', 'FormController@send');
 });
 Route::group(['middleware' => 'auth:api','namespace' => 'API'], function () {
      Route::post('addFirm', 'FirmController@store');

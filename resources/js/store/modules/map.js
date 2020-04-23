@@ -28,7 +28,6 @@ export const getters = {
     user_position: user_position => state.user_position,
     radius: radius => state.radius,
     showMapYesNoSidebar: showMapYesNoSidebar => state.showMapYesNoSidebar,
-
     search:search=>state.search,
     search_address: state => {
         return state.search.value

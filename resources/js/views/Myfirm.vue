@@ -1,13 +1,18 @@
 <template>
+
     <div v-show-slide:400:ease="showMapYesNoSidebar"
          class="sidebarLeft sidebarLeft--lg section container-fluid " id="sidebarLeft">
+
         <div class="panel-block panel-block--lg border border-primary-light">
             <div class="row-head row no-gutters bg-primary-light text-white">
+                <div class="col-lg-6">
+                    <div class="panel-block__head bg-wrap BackBlueHeder">
+                        <div class="panel-block__head-title">{{$t('my_firm')}}</div>
+                    </div>
+                </div>
                 <banner-top></banner-top>
             </div>
             <div class="panel-block__body">
-
-
                 <div class="row pb-1">
                     <div class="col-lg-6">
                         <router-link class="panel-block__link-add panel-block__link-add--title"
@@ -24,69 +29,31 @@
             </div>
             <banner-botom classNone="d-lg-none"></banner-botom>
         </div>
+
     </div>
 </template>
+
 <script>
     import {mapGetters} from "vuex";
     import BannerBotom from '~/components/Banner/BannerBotom';
     import BannerTop from "~/components/Banner/BannerTop";
     import ItemsLoop from "~/components/Firm/ItemsLoop.vue";
-
     export default {
-        name: "Search",
-        components: {BannerTop, BannerBotom, ItemsLoop},
+        name: "Myfirm",
         data() {
             return {
-                coord: null,
-                city: null,
-                q: null,
-                search_firms: null,
+
             }
         },
+        components: {ItemsLoop, BannerBotom, BannerTop},
         computed: {
             ...mapGetters({
-                showMapYesNoSidebar: 'map/showMapYesNoSidebar'
-            })
+                showMapYesNoSidebar: "map/showMapYesNoSidebar",
+                search_firms: "auth/user_firms"
+            }),
         },
-        watch: {
-            $route: {
-                immediate: true,
-                handler(to, from) {
-                    if (typeof this.$route.query.coord != "undefined") {
-                        this.coord = this.$route.query.coord;
-                    }
-                    if (typeof this.$route.query.q !== "undefined") {
-                        this.q = this.$route.query.q;
-                    }
-                    if (typeof this.$route.query.city !== "undefined") {
-                        this.city = this.$route.query.city;
-                    }
-                    this.search();
-                }
-            }
-        },
-        methods: {
-            search() {
-                let data = {};
-                if (this.coord !== null) {
-                    data.coord = this.coord;
-                } else if (this.q !== null) {
-                    data.q = this.q;
-                }
-                if (this.city !== null) {
-                    data.city = this.city;
-                }
-                axios.get('search', {
-                    params: data
-                })
-                    .then(response => {
-                        this.search_firms = response.data.firms;
-                    })
-                    .catch(error => {
-
-                    })
-            },
+        created() {
+            this.$store.dispatch("auth/get_firms")
         },
     }
 </script>
-

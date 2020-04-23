@@ -46,7 +46,6 @@ class ReviewController extends Controller
             if (!empty($photo_sql)) {
                 $review->photos = $photo_sql;
             }
-
         }
         $review->save();
         // рейтинг

@@ -12,14 +12,17 @@
     </div>
 </template>
 <script>
-    import {mapGetters} from "vuex";
+    // import {mapGetters} from "vuex";
+    import {eventBus} from '~/app'
     import places from 'places.js';
+
     var preferredLanguage = window.navigator.language.split("-")[0];
     export default {
         name: "SearchPlaces",
         data() {
             return {
-                places: null
+                places: null,
+                mounted: false
             };
         },
         props: {
@@ -28,8 +31,15 @@
                 default: true
             }
         },
+        created() {
+            eventBus.$on('setPlace', () => {
+                this.changePlace()
+
+            })
+        },
         mounted() {
-            this.places = places( {
+
+            this.places = places({
                 appId: appId,
                 apiKey: apiKey,
                 container: "#my-input-search"
@@ -43,7 +53,7 @@
                     this.$store.commit("map/SET_SEARCH", {
                         value: "",
                         latlng: null,
-                        type: ""
+                        type: false
                     });
                 } else {
                     let res = e.suggestion;
@@ -58,9 +68,11 @@
                 this.$store.commit("map/SET_SEARCH", {
                     value: "",
                     latlng: null,
-                    type: ""
+                    type: false
                 });
             });
+
+            /*
             if (this.$route.query.address !== undefined) {
                 this.places.setVal(this.$route.query.address);
                 this.$store.commit("map/SET_SEARCH", {
@@ -69,7 +81,14 @@
                     latlng: {lat: this.$route.query.lat, lng: this.$route.query.lng}
                 })
             }
+           */
+
         },
+        methods: {
+            changePlace() {
+                this.places.setVal(this.$store.state.map.search.value);
+            }
+        }
     };
 </script>
 

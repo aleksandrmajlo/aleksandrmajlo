@@ -4,11 +4,16 @@
    "mess":"Message",
    "favorite":"Favorite",
    "advertising_in":"Advertising in",
+   "advertising":"Advertising",
+   "advertising_text":"Хотите разместить рекламу на сайте?<br> Заполните простую форму ниже, и мы с вами свяжемся!",
+
+   "error_text":"Хотите сообщить об ошибке на сайте?<br> Пожалуйста, опишите ее ниже",
    "error_send":"Report a bug",
    "page_not":"404",
    "go_home":"Go home",
 
    "search_placholder":"начните вводить адрес от 3 символов",
+   "search_small":"search",
    
    "search_not_found":"Not found",
 
@@ -85,7 +90,22 @@
 
  "ALL_EROOR":"Что то пошло не так.Повторите чуть позже",
 
- "geolocation_marker":"You are a few meters from this point."
+ "geolocation_marker":"You are a few meters from this point.",
+ "not_auth":"Login required",
+
+ "my_review":"Мои отзывы",
+ "my_firm":"Мои объекты",
+ "notReview":"Вы еще не оставили ни одного отзыва",
+ "notMyFavorite":"Вы еще не добавили ни одного объекта в Избранное",
+
+ "addFavorite":"Добавить в избранное",
+ "removeFavorite":"Удалить из избранного",
+
+ "form_Succes":"Ваше сообщение получено.",
+
+ "form_submit":"Отправить"
+
+
 
 
 }

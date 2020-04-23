@@ -5,7 +5,7 @@
         id="sidebarLeft">
         <div class="panel-block panel-block--lg border border-primary-light">
             <div class="row-head row no-gutters bg-primary-light text-white">
-                <div class="col-lg-6">
+                <div class="col-lg-6"  v-show="photo">
                     <div class="panel-block__head bg-wrap">
                         <img class="img-bg object-fit-js" :src="photo" alt/>
                         <div class="panel-block__head-title">{{title}}</div>
@@ -289,9 +289,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="text-right mt-a mb-1">
-                    <a class="tdn" href="#">{{$t('ob_back')}}</a>
-                </div>
+
             </div>
             <banner-botom classNone="d-lg-none"></banner-botom>
         </div>
@@ -304,12 +302,11 @@
     import BannerBotom from "~/components/Banner/BannerBotom";
     import BannerTop from "~/components/Banner/BannerTop";
 
-    const DefaultImage = "/img/@2x/2019-09-06.png";
     export default {
         name: "AddFirm",
         data() {
             return {
-                photo: DefaultImage,
+                photo:false,
                 firm: {
                     title: "",
                     service: "",
@@ -390,7 +387,7 @@
                 if (images && images.length > 0) {
                     this.photo = images[0].dataURL;
                 } else {
-                    this.photo = DefaultImage;
+                    this.photo = false;
                 }
                 if (!images) {
                     images = this.$refs.upload.getFieled();
@@ -426,7 +423,7 @@
                                 //обнуление данных
                                 $("#my-input-search").val("");
                                 this.firm.photos = [];
-                                this.photo = DefaultImage;
+                                this.photo = false;
                                 for (let [key, value] of Object.entries(this.firm)) {
                                     if (key !== 'time_work' && key !== 'photos' && key !== 'type') {
                                         this.firm[key] = "";

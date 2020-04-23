@@ -3,6 +3,7 @@
         v-show-slide:400:ease="showMapYesNoSidebar"
         class="sidebarLeft sidebarLeft--md section container-fluid" id="sidebarLeft">
         <div class="panel-block panel-block--md border border-primary" v-if="firm!==null">
+
             <photos :photos="firm.photos" :key="firm.id"></photos>
 
             <div class="panel-block__body">
@@ -12,11 +13,12 @@
                     <div v-if="reviews&&reviews.length>0" class="col h5 fw-400 text-primary">{{$t('all_review')}}</div>
                     <div v-else class="col h5 fw-400 text-primary">{{$t('not_review')}}</div>
                     <div class="col-auto mb-3">
-                        <router-link class="text-body tdn" :to="'/addreview/?id='+id">
+                        <router-link  @click.native="clickRouterLinkActive('auth')"  class="text-body tdn" :to="'/addreview/?id='+id">
                             {{$t('ob_button')}} <img src="/img/svg/add.svg" alt=""/>
                         </router-link>
                     </div>
                 </div>
+
                 <div class="rew" v-show="reviews&&reviews.length>0">
 
                     <div class="rew__item" v-for="(review,index) in reviews">
@@ -32,18 +34,16 @@
                         <p>
                             {{review.comment}}
                         </p>
-                        <div class="row">
-                            <a class="d-flex align-items-center col-auto h6 text-primary fw-300 tdn" href="#">
-                                {{$t('like_review')}}
-                                <img class="ml-2" src="/img/svg/like-4.svg" alt=""/>
-                            </a>
-                            <a class="d-flex align-items-center col-auto h6 text-primary fw-300 tdn" href="#">
-                                <img class="ml-2" src="/img/svg/Share-4.svg" alt=""/>
-                            </a>
-                        </div>
-
+                        <review-share :review="review"></review-share>
                     </div>
                 </div>
+
+                <div class="text-left mt-a">
+                    <router-link class="tdn text-body" :to="'/object/'+this.id">
+                        {{$t('ob_back')}}
+                    </router-link>
+                </div>
+
             </div>
 
             <banner-botom ></banner-botom>
@@ -58,6 +58,7 @@
     import ReviewStars from "~/components/Firm/ReviewStars.vue";
     import Photos from "~/components/Firm/Photos.vue";
     import BannerBotom from '~/components/Banner/BannerBotom';
+    import ReviewShare from '~/components/Share/ReviewShare.vue';
     export default {
         name: "Review",
         data() {
@@ -70,7 +71,7 @@
                 error_text: "",
             };
         },
-        components: {TimeWork,ReviewStars,Photos,BannerBotom},
+        components: {TimeWork,ReviewStars,Photos,BannerBotom,ReviewShare},
         computed: {
             ...mapGetters({
                 showMapYesNoSidebar: "map/showMapYesNoSidebar",

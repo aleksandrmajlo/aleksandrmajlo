@@ -34,6 +34,15 @@ class ReviewController extends AdminController
         $grid->column('value', __('Оценка'));
         $grid->column('created_at', __('Created at'));
         $grid->ip('ip', __('Ip'));
+
+        $grid->filter(function ($filter) {
+            $filter->disableIdFilter();
+            $filter->like('comment', 'comment');
+            $filter->equal('user_id', 'Пользователь')
+                ->select(\App\User::all()->pluck('email', 'id'));
+            $filter->equal('firm_id', 'Объект')
+                ->select(\App\Firm::all()->pluck('title', 'id'));
+        });
         return $grid;
     }
 
@@ -68,22 +77,12 @@ class ReviewController extends AdminController
         $form = new Form(new Review());
         $form->switch('status', __('Status'));
         $form->textarea('comment', __('Comment'));
-        $form->decimal('value', __('Оценка'))->readOnly();
+        $form->number('value', __('Оценка'))->min(0)->max(5);
         $form->multipleImage('photos', __('Photos'))->removable();
 
-        $form->select('user_id')->options(function ($id) {
-            $user = \App\User::find($id);
-            if ($user) {
-                return [$user->id => $user->email];
-            }
-        })->readOnly();
+        $form->select('user_id', 'Пользователь')->options(\App\User::all()->pluck('email', 'id'));
+        $form->select('firm_id', 'Объект')->options(\App\Firm::all()->pluck('title', 'id'));
 
-        $form->select('firm_id')->options(function ($id) {
-            $firm = \App\Firm::find($id);
-            if ($firm) {
-                return [$firm->id => $firm->title." ".$firm->address];
-            }
-        })->readOnly();
 
         $form->ip('ip', __('Ip'));
         $form->tools(function (Form\Tools $tools) {

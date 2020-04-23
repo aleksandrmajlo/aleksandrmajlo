@@ -14,6 +14,8 @@ import AddPhoto from './views/AddPhoto'
 import Advertising from './views/Advertising'
 import Error from './views/Error'
 import Message from './views/Message'
+import Myreview from './views/Myreview'
+import Myfirm from './views/Myfirm'
 // Routes
 const routes = [
 
@@ -142,6 +144,24 @@ const routes = [
     },
 
     {
+        path: '/my_review',
+        name: 'my_review',
+        component: Myreview,
+        meta: {
+            auth: true
+        }
+    },
+
+    {
+        path: '/my_firm',
+        name: 'my_firm',
+        component: Myfirm,
+        meta: {
+            auth: true
+        }
+    },
+
+    {
         path: '/favorite',
         name: 'favorite',
         component: Favorite,
@@ -169,6 +189,9 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+    // console.log(to,'to')
+    // console.log(from,'from')
+    // console.log(next,'next')
     store.commit('map/ROUTERSHOWHIDDENSIDEBAR', false);
     // для мобилки скрыть меню при переходе
     $('.toggle-menu-mobile_my').removeClass('on');

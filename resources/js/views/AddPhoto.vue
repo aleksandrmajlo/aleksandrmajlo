@@ -16,7 +16,6 @@
                     <router-link class="tdn text-body" :to="'/object/'+this.id">
                         {{$t('ob_back')}}
                     </router-link>
-                    <a href="#"></a>
                 </div>
             </div>
             <banner-botom ></banner-botom>

@@ -110,7 +110,6 @@
                     photos: this.SetImages(),
                     firm_id: this.id
                 };
-                console.log(data)
                 axios({
                     method: "post",
                     url: "addReview",

@@ -9,7 +9,7 @@
             <banner-botom></banner-botom>
         </div>
         <div v-else-if="firm!==null" class="panel-block panel-block--md border border-primary">
-            <div class="panel-block__head bg-wrap">
+            <div v-if="firmPhoto" class="panel-block__head bg-wrap">
                 <img class="img-bg object-fit-js" :src="firmPhoto" alt=""/>
                 <div class="panel-block__head-title">{{firm.address}}</div>
             </div>
@@ -45,11 +45,10 @@
                 showMapYesNoSidebar: "map/showMapYesNoSidebar"
             }),
             firmPhoto() {
-                console.log(this.firm.photos)
                 if (this.firm !== null && this.firm.photos.length > 0) {
                     return this.firm.photos[0].resized
                 }
-                return '/img/@2x/2019-09-06.png';
+                return false;
             }
         },
         watch: {

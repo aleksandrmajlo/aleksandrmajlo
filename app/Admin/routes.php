@@ -23,4 +23,6 @@ Route::group([
     $router->get('banners', 'BannerController@index');
     $router->post('banners', 'BannerController@update');
 
+    $router->resource('infos', InfoController::class);
+
 });

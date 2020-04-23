@@ -1,8 +1,10 @@
 <template>
     <div class="dropdown__block dropdown__block--menu " :class="{active:mobile}">
         <div class="menu-map">
+            <!--
             <a class="menu-map__btn" :class="{active:mapname=='Yandex'}" @click.prevent="setMap('Yandex')" href="#">Yandex</a>
             <a class="menu-map__btn" :class="{active:mapname=='Google'}" @click.prevent="setMap('Google')" href="#">Google</a>
+            -->
             <a class="menu-map__btn" :class="{active:mapname=='OpenStreet'}" @click.prevent="setMap('OpenStreet')"
                href="#">OpenStreet</a>
         </div>
@@ -24,7 +26,8 @@
 								 </svg>
                           </span>{{$t('favorite')}}
             </router-link>
-            <router-link :to="{name:'addobject'}" @click.native="clickRouterLinkActive" class="nav__link">
+
+            <router-link :to="{name:'addobject'}" @click.native="clickRouterLinkActive('auth')" class="nav__link">
                      <span class="nav__icon-wrap">
 						 <svg class="icon icon-map_marker ">
 							  <use xlink:href="/img/svg/sprite.svg#map_marker"></use>

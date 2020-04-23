@@ -62,7 +62,9 @@
                 return files;
             },
             sending(file, xhr, formData) {
-                formData.append('user_id', this.user.id);
+                if(this.user){
+                    formData.append('user_id', this.user.id);
+                }
             },
             suc(file, response) {
                 let files = this.$refs.myVueDropzone.getAcceptedFiles();

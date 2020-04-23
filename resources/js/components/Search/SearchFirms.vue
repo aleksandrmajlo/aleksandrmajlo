@@ -3,21 +3,22 @@
         <div
             class="search-block__input-wrap"
             :class="{active:mobileSearch}"
-            @keyup.enter="submitSearch"
-        >
+            @keyup.enter="submitSearch">
             <input
                 :value="query"
                 @input="evt=>query=evt.target.value"
                 class="search-block__input"
                 id="searchInput"
                 type="text"
-                :placeholder="$t('search_placholder')"
+                @focus="focusQ"
+                @blur="blurQ"
+                :placeholder="placeholder"
             />
             <button @click.prevent="submitSearch" class="search-block__btn" type="submit">
                 <img src="/img/svg/search.svg" alt/>
             </button>
             <div class="search-block__dropdown myDropDown"
-                :class="{activeSearch:items!==null&&items.length>0&&showRouterLink}">
+                 :class="{activeSearch:items!==null&&items.length>0&&showRouterLink}">
                    <span v-for="(item,index) in items" :key="item.id">
           <router-link
               v-if="item.type!==undefined"
@@ -53,15 +54,27 @@
     var preferredLanguage = window.navigator.language.split("-")[0];
     // import algoliasearch from "algoliasearch";
     import * as algoliasearch from "algoliasearch/lite";
+    import {mapGetters} from "vuex";
     export default {
         name: "SearchFirms",
+        computed: {
+            ...mapGetters({
+                locale: "lang/locale",
+            })
+        },
         data() {
             return {
                 mobileSearch: false,
                 showRouterLink: true,
                 items: null,
                 algoliasearch: null,
-                query: ""
+                query: "",
+                placeholder: " ",
+                placeholderLoad:{
+                    ru:'поиск',
+                    uk:'пошук',
+                    en:'search',
+                }
             };
         },
         watch: {
@@ -76,6 +89,9 @@
                     }
                 }, 100)
             }
+        },
+        mounted() {
+            this.placeholder = this.placeholderLoad[this.locale];
         },
         methods: {
             searchFirms() {
@@ -106,13 +122,13 @@
                 this.clickRouterLinkActive();
             },
             // клик по ссылке перейти
-            serchLinkPlace(item){
+            serchLinkPlace(item) {
                 this.query = "";
                 this.clickRouterLinkActive();
                 this.$store.commit("map/SET_SEARCH", {
-                    value:item.title,
+                    value: item.title,
                     type: "searchCity",
-                    latlng:item.coord
+                    latlng: item.coord
                 });
             },
             // поиск по адресу
@@ -159,10 +175,18 @@
                         }
 
                     });
-            }
+            },
+            focusQ() {
+                this.placeholder = this.$t('search_placholder');
+            },
+            blurQ() {
+                this.placeholder = this.$t('search_small');
+            },
+
         }
     };
 </script>
+
 
 
 

@@ -34,6 +34,15 @@ class PhotoController extends AdminController
         $grid->firm()->title();
         $grid->user()->email();
         $grid->column('created_at', __('Created at'));
+
+        $grid->filter(function ($filter) {
+            $filter->disableIdFilter();
+            $filter->equal('user_id', 'Пользователь')
+                ->select(\App\User::all()->pluck('email', 'id'));
+            $filter->equal('firm_id', 'Объект')
+                ->select(\App\Firm::all()->pluck('title', 'id'));
+        });
+
         return $grid;
     }
 
@@ -67,21 +76,10 @@ class PhotoController extends AdminController
     {
         $form = new Form(new Photo());
         $form->switch('status', __('Status'));
-        $form->multipleImage('photos', __('Photos'))->removable();
-        $form->select('user_id','User')->options(function ($id) {
-            $user = \App\User::find($id);
-            if ($user) {
-                return [$user->id => $user->email];
-            }
-        })->readOnly();
+        $form->multipleImage('photos', __('Photos'));
 
-        $form->select('firm_id','Firm')->options(function ($id) {
-            $firm = \App\Firm::find($id);
-            if ($firm) {
-                return [$firm->id => $firm->title." ".$firm->address];
-            }
-        })->readOnly();
-
+        $form->select('user_id', 'Пользователь')->options(\App\User::all()->pluck('email', 'id'));
+        $form->select('firm_id', 'Объект')->options(\App\Firm::all()->pluck('title', 'id'));
         return $form;
     }
 }

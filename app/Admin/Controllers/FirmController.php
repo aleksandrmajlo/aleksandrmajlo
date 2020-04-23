@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Firm;
+use App\User;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -12,6 +13,7 @@ use Encore\Admin\Controllers\HasResourceActions;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Encore\Admin\Layout\Content;
+use Illuminate\View\View;
 
 class FirmController extends Controller
 {
@@ -46,12 +48,12 @@ class FirmController extends Controller
         $grid->created_at()->sortable();
 
         $grid->filter(function ($filter) {
-
             $filter->disableIdFilter();
             $filter->like('title', 'title');
             $filter->like('address', 'address');
             $filter->like('phone', 'phone');
-
+            $filter->equal('user_id', 'Пользователь')
+                ->select(\App\User::all()->pluck('email', 'id'));
         });
         return $grid;
     }
@@ -118,8 +120,10 @@ class FirmController extends Controller
         $form->text('address', __('Адрес'))->required();
         $form->text('service', __('Service'))->required();
 
+
         $form->radio('type', __('Тип'))->options(['1' => 'Коммерческая организация', '2' => 'Жилой дом'])->required();
 
+        $form->select('user_id', 'Пользователь')->options(User::all()->pluck('email', 'id'));
         $form->mobile('phone', __('Phone'));
         $form->email('email', __('Email'));
         $form->text('site', __('Site'));
@@ -130,195 +134,9 @@ class FirmController extends Controller
                 if($firm->time_work){
                     $time_work=$firm->time_work;
                     ob_start();
+                    $view = view('admin.timework', ['id' => $id,'time_work'=>$time_work]);
+                    echo $view->render()
                     ?>
-                    <table class="table table-bordered">
-                        <tr>
-                            <td>Понедельник</td>
-                            <td>
-                                <input readonly type="time" value="<?php echo $time_work['dayMo']['start'] ?>"/>
-                            </td>
-                            <td>
-                                <input readonly type="time"  value="<?php echo $time_work['dayMo']['end'] ?>"/>
-                            </td>
-                            <td>
-                                <?php
-                                 if($time_work['dayMo']['notwork']){
-                                     ?>
-                                     <p>Не работают</p>
-                                     <?php
-                                 }else{
-                                     ?>
-                                     <p>Работают</p>
-                                     <?php
-                                 }
-                                ?>
-                                <!--
-                                <label class="time-select">
-                                    <input
-                                        class="time-select__input"
-                                        type="checkbox"
-                                        v-model="firm.time_work.dayMo.notwork"
-                                    />
-                                    <span
-                                        class="time-select__text time-select__text--work"
-                                    >{{$t('ob_work_day')}}</span>
-                                    <span
-                                        class="time-select__text time-select__text--holiday"
-                                    >{{$t('ob_out_day')}}</span>
-                                </label>
-                                -->
-                            </td>
-                        </tr>
-                        <tr>
-
-                        <tr>
-
-                            <td>Вторник</td>
-                            <td>
-                                <input readonly type="time" value="<?php echo $time_work['dayTu']['start'] ?>"/>
-                            </td>
-                            <td>
-                                <input readonly type="time"  value="<?php echo $time_work['dayTu']['end'] ?>"/>
-                            </td>
-                            <td>
-                                <?php
-                                if($time_work['dayTu']['notwork']){
-                                    ?>
-                                    <p>Не работают</p>
-                                    <?php
-                                }else{
-                                    ?>
-                                    <p>Работают</p>
-                                    <?php
-                                }
-                                ?>
-                            </td>
-
-                        </tr>
-                        <tr>
-
-                            <td>Среда</td>
-                            <td>
-                                <input readonly type="time" value="<?php echo $time_work['dayWE']['start'] ?>"/>
-                            </td>
-                            <td>
-                                <input readonly type="time"  value="<?php echo $time_work['dayWE']['end'] ?>"/>
-                            </td>
-                            <td>
-                                <?php
-                                if($time_work['dayWE']['notwork']){
-                                    ?>
-                                    <p>Не работают</p>
-                                    <?php
-                                }else{
-                                    ?>
-                                    <p>Работают</p>
-                                    <?php
-                                }
-                                ?>
-                            </td>
-
-                        </tr>
-                        <tr>
-
-                            <td>Четверг</td>
-                            <td>
-                                <input readonly type="time" value="<?php echo $time_work['dayTH']['start'] ?>"/>
-                            </td>
-                            <td>
-                                <input readonly type="time"  value="<?php echo $time_work['dayTH']['end'] ?>"/>
-                            </td>
-                            <td>
-                                <?php
-                                if($time_work['dayTH']['notwork']){
-                                    ?>
-                                    <p>Не работают</p>
-                                    <?php
-                                }else{
-                                    ?>
-                                    <p>Работают</p>
-                                    <?php
-                                }
-                                ?>
-                            </td>
-
-                        </tr>
-                        <tr>
-
-                            <td>Пятница</td>
-                            <td>
-                                <input readonly type="time" value="<?php echo $time_work['dayFR']['start'] ?>"/>
-                            </td>
-                            <td>
-                                <input readonly type="time"  value="<?php echo $time_work['dayFR']['end'] ?>"/>
-                            </td>
-                            <td>
-                                <?php
-                                if($time_work['dayFR']['notwork']){
-                                    ?>
-                                    <p>Не работают</p>
-                                    <?php
-                                }else{
-                                    ?>
-                                    <p>Работают</p>
-                                    <?php
-                                }
-                                ?>
-                            </td>
-
-
-                        </tr>
-                        <tr>
-
-
-                            <td>Cуббота</td>
-                            <td>
-                                <input readonly type="time" value="<?php echo $time_work['daySA']['start'] ?>"/>
-                            </td>
-                            <td>
-                                <input readonly type="time"  value="<?php echo $time_work['daySA']['end'] ?>"/>
-                            </td>
-                            <td>
-                                <?php
-                                if($time_work['daySA']['notwork']){
-                                    ?>
-                                    <p>Не работают</p>
-                                    <?php
-                                }else{
-                                    ?>
-                                    <p>Работают</p>
-                                    <?php
-                                }
-                                ?>
-                            </td>
-
-
-                        </tr>
-                        <tr>
-
-                            <td>Воскресенье</td>
-                            <td>
-                                <input readonly type="time" value="<?php echo $time_work['daySU']['start'] ?>"/>
-                            </td>
-                            <td>
-                                <input readonly type="time"  value="<?php echo $time_work['daySU']['end'] ?>"/>
-                            </td>
-                            <td>
-                                <?php
-                                if($time_work['daySU']['notwork']){
-                                    ?>
-                                    <p>Не работают</p>
-                                    <?php
-                                }else{
-                                    ?>
-                                    <p>Работают</p>
-                                    <?php
-                                }
-                                ?>
-                            </td>
-
-                        </tr>
-                    </table>
                     <?php
                     return ob_get_clean();
                 }
@@ -328,19 +146,13 @@ class FirmController extends Controller
         });
 
 
-        $form->textarea('comment', __('Comment'));
+//        $form->textarea('comment', __('Comment'));
         $form->multipleImage('photos', __('Photos'))->removable();
 //        $form->text('location', __('Location'));
 
-        $form->select('user_id')->options(function ($id) {
-            $user = \App\User::find($id);
-            if ($user) {
-                return [$user->id => $user->email];
-            }
-        })->readOnly();
 
-        $form->textarea('meta_title', __('Meta title'));
-        $form->textarea('meta_description', __('Meta description'));
+//        $form->textarea('meta_title', __('Meta title'));
+//        $form->textarea('meta_description', __('Meta description'));
 
         $form->disableCreatingCheck();
         $form->disableViewCheck();

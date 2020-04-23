@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Firm;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -22,27 +23,23 @@ class HomeController extends Controller
     public function index(Request $request)
     {
 //        *****************************************************
-        /*
-        $id=5;
-        $firm = Firm::select('id', 'title', 'address', 'type', 'time_work', 'service', 'email', 'phone', 'meta_title', 'meta_description', 'location', 'photos','status')->findOrFail($id);
-        if($firm->status===0){
-            return response()->json(['error' => trans('validation.notFirm')], 404);
+       /*
+        $id = $request->id;
+        $user = User::find(1);
+        $reviewRes=[];
+        if($user->reviews){
+            foreach ($user->reviews as $review){
+                $reviewRes[]=[
+                    'comment'=>$review->comment,
+                    'value' =>$review->value,
+                    'firm_id'=>$review->firm_id,
+                    "firm"=>$review->firm->title
+                ];
+            }
         }
-        $firm->photos = $firm->allphotos;
-        $firm->rating=intval($firm->ratingsAvg());
-        $lat = $firm->location->getLat();
-        $lng = $firm->location->getLng();
-        $coord = $lat . "_" . $lng;
-        $firm->coord=$coord;
-        $others = DB::select("SELECT id,title FROM firms WHERE st_distance_sphere(location, POINT('$lng',$lat)) <= 100 AND id!=".$id." ORDER BY id DESC");
-        dump($others);
-        dd();
 
-        return response()->json(
-            [
-                'firm' => $firm,
-            ]);
-        */
+        dump($reviewRes);
+       */
 //        *****************************************************
 
         return view('home');

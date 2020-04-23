@@ -3,12 +3,20 @@
 </template>
 <script>
     const geolocation_marker = {
-        en:'You are a few meters from this point.',
-        ru:'Вы находитесь в нескольких метрах от этой точки.',
-        uk:'Ви перебуваєте в декількох метрах від цієї точки.',
-    }
-    import {mapGetters} from "vuex";
+        en: 'You are a few meters from this point.',
+        ru: 'Вы находитесь в нескольких метрах от этой точки.',
+        uk: 'Ви перебуваєте в декількох метрах від цієї точки.',
+    };
     import L from "leaflet";
+    import {mapGetters} from "vuex";
+    import {eventBus} from '~/app';
+
+    const mapsLeer = {
+        osm: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        osm2: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+        google: 'http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',
+    };
+
     export default {
         name: "LmapBlock",
         data() {
@@ -33,18 +41,17 @@
             }
         },
         watch: {
-            search(newVal,oldVal){
-                if(this.search.latlng===null){
+            search(newVal, oldVal) {
+                if (this.search.latlng === null) {
                     this.removeSearchMarker();
-                }else{
+                } else {
                     this.removeSearchMarker();
                     this.addMarkerSearch();
                 }
             },
             user_position() {
-
                 if (this.user_position.lat !== null && this.user_position.lng !== null) {
-                    let marker=L.marker(this.user_position)
+                    let marker = L.marker(this.user_position)
                         .addTo(this.map)
                         .bindPopup(geolocation_marker[this.locale])
                         .openPopup();
@@ -68,10 +75,11 @@
                 attributionControl: false,
                 zoomControl: false
             }).setView(this.center, this.zoom);
-            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-                attribution:
-                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(this.map);
+            L.tileLayer(
+                mapsLeer.osm,
+                {
+                    attribution: ''
+                }).addTo(this.map);
             //************************************
             L.control
                 .zoom({
@@ -85,6 +93,17 @@
             this.map.on("click", function (e) {
                 app.$store.commit("map/ROUTERSHOWHIDDENSIDEBAR", false);
             });
+
+            this.map.on('zoomend', function (e) {
+                let currZoom = app.map.getZoom();
+                if(currZoom>10){
+                    $('body').removeClass('MarkerHidden')
+                }else{
+                    $('body').addClass('MarkerHidden')
+                }
+                console.log(currZoom)
+            });
+
         },
         methods: {
             addMarker() {
@@ -96,15 +115,15 @@
                     let address = "";
                     let firms = this.firms[key];
                     let ids = [];
-                    let len=firms.length;
-                    for (let index = 0; index <len ; index++) {
+                    let len = firms.length;
+                    for (let index = 0; index < len; index++) {
                         const element = firms[index];
                         if (index === 0) {
                             address = element.address;
                             coord = element.coord;
                         }
-                        let koma=" ";
-                        if(index!==(len-1))koma=", ";
+                        let koma = " ";
+                        if (index !== (len - 1)) koma = ", ";
                         title +=
                             '<a class="setObject" data-key="' +
                             key +
@@ -112,7 +131,7 @@
                             element.id +
                             '" href="#">' +
                             element.title +
-                            "</a>"+koma;
+                            "</a>" + koma;
                         ids.push(element.id);
                     }
                     let marker = L.marker(coord, {
@@ -152,6 +171,7 @@
                 });
             },
             addMarkerSearch() {
+                let app = this;
                 var LeafIcon = L.icon({
                     iconUrl: "/img/placealtadd.svg",
                     iconSize: [40, 40]
@@ -165,17 +185,22 @@
                 );
                 this.searchMarker.bindPopup(
                     '<p class="text-center">' +
-                        '<strong>' +
-                            this.search.value +
-                        '</strong>' +
+                    '<strong>' +
+                    this.search.value +
+                    '</strong>' +
                     '</p>'
                 );
+                this.searchMarker.on('click', function (e) {
+                    if (app.search.type == "searchCity") {
+                        app.$router.push({name: 'addobject'});
+                        setTimeout(() => {
+                            eventBus.$emit('setPlace');
+                        }, 10)
+                    }
+                });
                 this.searchMarker.addTo(this.map);
                 this.map.setView([this.search.latlng.lat, this.search.latlng.lng], 14, {
                     animate: false,
-                    pan: {
-                        duration: 10
-                    }
                 });
                 this.searchMarker.openPopup();
             },

@@ -156,4 +156,13 @@ class FirmController extends Controller
     {
         //
     }
+
+    public function saveTimeWork(Request $request){
+        $id=$request->id;
+        $res=$request->res;
+        $firm = Firm::find( $id);
+        $firm->time_work = $res;
+        $firm->save();
+        return response()->json(['suc'=>true]);
+    }
 }

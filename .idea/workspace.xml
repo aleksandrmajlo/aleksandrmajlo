@@ -2,74 +2,64 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9898c4a6-71ed-4a0a-86da-e922c0f18eb7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/js/components/Banner/BannerBotom.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/Firm/Item.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/maps.local.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/maps.local.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/API/FormController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/API/UserController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/info.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/Firm/FavoriteItem.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/Firm/ItemsLoop.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/Share/ReviewShare.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/views/Myfirm.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/views/Myreview.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/timework.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/emails/form.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Verstka/0001wikirent/public/2.html" beforeDir="false" afterPath="$PROJECT_DIR$/Verstka/0001wikirent/public/2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Verstka/0001wikirent/public/8.html" beforeDir="false" afterPath="$PROJECT_DIR$/Verstka/0001wikirent/public/8.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Verstka/0001wikirent/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Verstka/0001wikirent/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/FirmController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/FirmController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/PhotoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/PhotoController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Admin/Controllers/ReviewController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/Controllers/ReviewController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Admin/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Admin/routes.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/FirmController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/FirmController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/ReviewController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/ReviewController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/SearchController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AuthController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UploadImagesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UploadImagesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/auth.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/main.min — копия.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/main.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/main.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/dist/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/dist/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/dist/js/0.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/dist/js/0.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/dist/js/1.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/dist/js/1.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/dist/js/2.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/dist/js/2.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/dist/js/3.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/dist/js/3.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/dist/js/4.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/dist/js/4.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/dist/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/dist/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/bootstrap.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/common.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Auth/LoginBlock.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Auth/LoginBlock.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Auth/RegistrarBlock.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Auth/RegistrarBlock.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Banner/Banner.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Banner/Banner.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Banner/BannerTop.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Banner/BannerTop.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Dropzone/DropzoneComp.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Dropzone/DropzoneComp.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Firm/Item.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Firm/Item.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/LangButton/LangButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/LangButton/LangButton.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Map/GeolocationMy.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Map/GeolocationMy.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Map/GoogleBlock.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Map/GoogleBlock.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Map/LmapBlock.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Map/LmapBlock.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Map/MapBlock.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Map/MapBlock.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Search/SearchBlock.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Search/SearchBlock.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Search/SearchFirms.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Search/SearchFirms.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Search/SearchPlaces.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Search/SearchPlaces.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/lang/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/lang/en.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/lang/ru.json" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/lang/ru.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/lang/uk.json" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/lang/uk.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/mixin/local_mixin.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/mixin/local_mixin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/mixin/mixin.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/mixin/mixin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/plugins/i18n.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/plugins/i18n.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/store/modules/firms.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/modules/firms.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/modules/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/modules/auth.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/store/modules/map.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/modules/map.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/mutation-types.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/mutation-types.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/views/Account.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/views/Account.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/views/AddFirm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/views/AddFirm.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/views/AddPhoto.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/views/AddPhoto.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/views/AddReview.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/views/AddReview.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/views/Advertising.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/views/Advertising.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/views/Error.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/views/Error.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/views/Favorite.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/views/Favorite.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/views/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/views/Home.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/views/NotFound.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/views/NotFound.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/views/Message.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/views/Message.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/views/Object.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/views/Object.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/views/Review.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/views/Review.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/views/Search.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/views/Search.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpack.mix.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.mix.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -234,7 +224,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/lang/uk" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\PhpStorm 2019.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
@@ -318,6 +308,17 @@
       <workItem from="1587017482656" duration="11482000" />
       <workItem from="1587030481471" duration="1715000" />
       <workItem from="1587040629468" duration="24833000" />
+      <workItem from="1587104723721" duration="2230000" />
+      <workItem from="1587209809310" duration="4041000" />
+      <workItem from="1587223091741" duration="6800000" />
+      <workItem from="1587239533195" duration="6584000" />
+      <workItem from="1587275434686" duration="1885000" />
+      <workItem from="1587366951837" duration="54000" />
+      <workItem from="1587535590914" duration="29543000" />
+      <workItem from="1587624467774" duration="9336000" />
+      <workItem from="1587656622452" duration="56000" />
+      <workItem from="1587657114902" duration="16093000" />
+      <workItem from="1587675759536" duration="1337000" />
     </task>
     <servers />
   </component>
@@ -350,6 +351,11 @@
           <line>97</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/resources/views/admin/timework.blade.php</url>
+          <line>207</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/resources/js/auth.js</url>
           <line>7</line>
@@ -377,7 +383,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/resources/js/views/AddFirm.vue</url>
-          <line>311</line>
+          <line>308</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -392,18 +398,34 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/resources/js/views/Search.vue</url>
-          <line>22</line>
+          <line>10</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/resources/js/store/modules/map.js</url>
-          <line>51</line>
+          <line>50</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/resources/js/views/Search.vue</url>
-          <line>15</line>
+          <line>7</line>
           <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/resources/js/components/Map/LmapBlock.vue</url>
+          <line>193</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/resources/js/components/Map/LmapBlock.vue</url>
+          <line>77</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/resources/js/views/Error.vue</url>
+          <line>10</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="30" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
