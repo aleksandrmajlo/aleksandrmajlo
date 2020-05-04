@@ -12,7 +12,9 @@
 */
 
 
+Route::get('/test','HomeController@test');
 
 Route::get('/{any}', 'HomeController@index')->where('any', '^(?!api\/)[\/\w\.-]*');
+
 Auth::routes();
 

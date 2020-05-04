@@ -1,17 +1,19 @@
-import {mapGetters} from "vuex";
+import {
+    mapGetters
+} from "vuex";
 export default {
-    data(){
-        return{
-            Login_required:{
-                ru:'Требуется логин',
-                uk:'Необхідний вхід',
-                en:'Login required'
+    data() {
+        return {
+            Login_required: {
+                ru: 'Требуется логин',
+                uk: 'Необхідний вхід',
+                en: 'Login required'
             }
         }
     },
-    computed:{
+    computed: {
         ...mapGetters({
-            locale:'lang/locale'
+            locale: 'lang/locale'
         })
     },
     methods: {
@@ -29,7 +31,6 @@ export default {
             let settings = {
                 loader: 'spinner',
                 color: '#ecf5ff',
-                // backgroundColor: '#ecf5ff',
             };
             let res = Object.assign(settings, data)
             let loader = this.$loading.show(res);
@@ -37,8 +38,8 @@ export default {
         },
         clickRouterLinkActive(type = false) {
             this.$store.commit('map/ROUTERSHOWHIDDENSIDEBAR', true);
-            if (type && type == 'auth' && !Vue.auth.check()) {
-                this.showShwal('error',this.Login_required[this.locale])
+            if (type == 'auth' && !Vue.auth.check()) {
+                this.showShwal('error', this.Login_required[this.locale])
             }
         }
     }

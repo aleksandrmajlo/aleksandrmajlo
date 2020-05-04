@@ -17,5 +17,9 @@
  * Admin::js('/packages/prettydocs/js/main.js');
  *
  */
+//use App\Admin\Extensions\Column\ExpandRow;
+//use Encore\Admin\Grid\Column;
 
 Encore\Admin\Form::forget(['map', 'editor']);
+//\Encore\Admin\Facades\Admin::css(['admin_assets/custom-style.css']);
+//Column::extend('expand', ExpandRow::class);

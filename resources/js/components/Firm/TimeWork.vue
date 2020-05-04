@@ -1,5 +1,6 @@
 <template>
-    <div class="timeWorkConteer">
+    <div class="timeWorkConteer" v-if="isVisible">
+
         <div v-if="open_close_firm" class="h6 text-primary fw-300">{{$t('open_firm')}}</div>
         <div v-if="!open_close_firm" class="h6 text-primary fw-300">
             {{$t('close_firm')}}
@@ -59,6 +60,7 @@
 </template>
 
 <script>
+
     export default {
         name: "TimeWork",
         data() {
@@ -75,7 +77,25 @@
                     return JSON.parse(this.time_value);
                 }
                 return this.time_value;
-            }
+            },
+
+            isVisible() {
+                if (typeof this.time_value == "string") {
+                    let v = JSON.parse(this.time_value);
+                    let work = false;
+                    for (let k in v) {
+                        const element = v[k];
+                        if (!element.notwork) {
+                            work = true
+                        }
+                    }
+                    if (work) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+
         },
         watch: {
             time_value: {
@@ -87,6 +107,9 @@
                     this.isWork();
                 }
             }
+        },
+        created(){
+            this.$store.dispatch('firms/getCategories')
         },
         methods: {
             isWork() {

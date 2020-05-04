@@ -3,9 +3,11 @@
         v-show-slide:400:ease="showMapYesNoSidebar"
         class="sidebarLeft sidebarLeft--lg section container-fluid"
         id="sidebarLeft">
+
+
         <div class="panel-block panel-block--lg border border-primary-light">
             <div class="row-head row no-gutters bg-primary-light text-white">
-                <div class="col-lg-6"  v-show="photo">
+                <div class="col-lg-6" v-show="photo">
                     <div class="panel-block__head bg-wrap">
                         <img class="img-bg object-fit-js" :src="photo" alt/>
                         <div class="panel-block__head-title">{{title}}</div>
@@ -13,7 +15,7 @@
                 </div>
                 <banner-top v-if="showMapYesNoSidebar"></banner-top>
             </div>
-            <div class="panel-block__body">
+            <div class="panel-block__body bodyPadding">
                 <div class="panel-block__link-add panel-block__link-add--title">
                     <span>{{$t('ob_add')}}</span>
                     <svg class="icon icon-map_marker">
@@ -44,30 +46,20 @@
                                 name="text"
                             />
                         </div>
-                        <div class="border-dotted border-dotted--block">
+                        <div class="border-dotted border-dotted--block " :class="{'invalidRadio':!isValidcat}">
                             <div class="fw-300 mb-2">{{$t('ob_type_ob')}}</div>
-                            <label class="custom-input">
+                            <label v-for="(category,index) in categories" :key="index" class="custom-input LabelBlock">
                                 <input
                                     class="custom-input__input"
                                     type="radio"
                                     name="type"
-                                    v-model="firm.type"
-                                    value="1"
+                                    v-model="firm.category_id"
+                                    :value="category.id"
                                 />
                                 <span class="custom-input__lab"></span>
-                                <span class="custom-input__text">{{$t('ob_type_kom_ob')}}</span>
+                                <span class="custom-input__text">{{category.title}}</span>
                             </label>
-                            <label class="custom-input">
-                                <input
-                                    class="custom-input__input"
-                                    type="radio"
-                                    name="type"
-                                    v-model="firm.type"
-                                    value="2"
-                                />
-                                <span class="custom-input__lab"></span>
-                                <span class="custom-input__text">{{$t('ob_type_house_ob')}}</span>
-                            </label>
+
                         </div>
                         <div class="panel-block__input-wrap form-group">
                             <input
@@ -96,9 +88,8 @@
                         <dropzone-comp ref="upload" @SetImagesChild="SetImages"></dropzone-comp>
                     </div>
                     <div class="col-lg-6 d-flex flex-column">
-                        <div
-                            class="accordion-item accordion-item--js border-dotted border-dotted border-dotted--block"
-                        >
+                        <div class="accordion-item accordion-item--js border-dotted border-dotted border-dotted--block"
+                             v-show-slide:400:ease="isShowTimeWork">
                             <div class="accordion-item__toggle accordion-item__toggle--js">{{$t('ob_time')}}</div>
                             <div class="accordion-item__dropdown accordion-item__dropdown--js">
                                 <table>
@@ -275,11 +266,11 @@
                         </div>
 
                         <div class="form-group">
-              <textarea
-                  class="form-control border-dotted"
-                  v-model="firm.comment"
-                  :placeholder="$t('ob_comment')"
-              ></textarea>
+                           <textarea
+                               class="form-control border-dotted"
+                               v-model="firm.comment"
+                               :placeholder="$t('ob_comment')"
+                           ></textarea>
                         </div>
                         <button
                             class="panel-block__btn-add"
@@ -306,11 +297,11 @@
         name: "AddFirm",
         data() {
             return {
-                photo:false,
+                photo: false,
                 firm: {
                     title: "",
                     service: "",
-                    type: 1,
+                    category_id: "",
                     phone: "",
                     email: "",
                     site: "",
@@ -356,22 +347,40 @@
                 },
                 titleInValid: false,
                 titleInService: false,
-                isValidaddress: true
+                isValidaddress: true,
+                isValidcat: true,
+                isShowTimeWork: true
             };
         },
+        components: {DropzoneComp, BannerBotom, BannerTop, SearchPlaces},
         computed: {
             title() {
                 return this.$store.state.map.search.value;
             },
             ...mapGetters({
+                categories: "firms/categories",
                 location: "map/search_latlng",
                 address: "map/search_address",
                 user: "auth/user",
+                locale: "lang/locale",
                 showMapYesNoSidebar: "map/showMapYesNoSidebar"
             })
         },
-        components: {DropzoneComp, BannerBotom, BannerTop, SearchPlaces},
+        watch: {
+            'firm.category_id': function (newCategoryId) {
+                let index = this.categories.map(item => parseInt(item.id)).indexOf(parseInt(newCategoryId));
+                if (this.categories[index].timeworkstatus == 1) {
+                    this.isShowTimeWork = false;
+                } else {
+                    this.isShowTimeWork = true;
+                }
+            }
+        },
+        created() {
+            this.$store.dispatch('firms/getCategories')
+        },
         mounted() {
+
             $(".accordion-item__toggle--js").click(function () {
                 $(this)
                     .next()
@@ -462,6 +471,12 @@
                     valid = false;
                 } else {
                     this.isValidaddress = true;
+                }
+                if (this.firm.category_id == "") {
+                    this.isValidcat = false;
+                    valid = false;
+                } else {
+                    this.isValidcat = true;
                 }
                 return valid;
             }

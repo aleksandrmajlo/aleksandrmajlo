@@ -114,6 +114,7 @@
       <path value="$PROJECT_DIR$/vendor/laravel-admin-ext/latlong" />
       <path value="$PROJECT_DIR$/vendor/nagy/laravel-rating" />
       <path value="$PROJECT_DIR$/vendor/algolia/algoliasearch-client-php" />
+      <path value="$PROJECT_DIR$/vendor/yandex/geo" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />

@@ -16,7 +16,7 @@
         osm2: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
         google: 'http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',
     };
-
+     const SET_ZOOM=18;
     export default {
         name: "LmapBlock",
         data() {
@@ -25,6 +25,7 @@
                 firms: null,
                 mapMarker: [],
                 searchMarker: null,
+
             };
         },
         computed: {
@@ -42,7 +43,7 @@
         },
         watch: {
             search(newVal, oldVal) {
-                if (this.search.latlng === null) {
+                if (typeof this.search.latlng == "undefined" || this.search.latlng === null) {
                     this.removeSearchMarker();
                 } else {
                     this.removeSearchMarker();
@@ -67,6 +68,11 @@
                     });
                 }
             }
+        },
+        created() {
+            eventBus.$on('setFirmCoord', (item) => {
+                this.SetCenter(item);
+            })
         },
         mounted() {
             let app = this;
@@ -96,12 +102,12 @@
 
             this.map.on('zoomend', function (e) {
                 let currZoom = app.map.getZoom();
-                if(currZoom>10){
+                if (currZoom > 10) {
                     $('body').removeClass('MarkerHidden')
-                }else{
+                } else {
                     $('body').addClass('MarkerHidden')
                 }
-                console.log(currZoom)
+                // console.log(currZoom)
             });
 
         },
@@ -191,15 +197,16 @@
                     '</p>'
                 );
                 this.searchMarker.on('click', function (e) {
-                    if (app.search.type == "searchCity") {
-                        app.$router.push({name: 'addobject'});
-                        setTimeout(() => {
-                            eventBus.$emit('setPlace');
-                        }, 10)
-                    }
+                    app.$router.push({name: 'addobject'})
+                        .catch(err => {
+                        })
+                    app.clickRouterLinkActive('auth');
+                    setTimeout(() => {
+                        eventBus.$emit('setPlace');
+                    }, 10)
                 });
                 this.searchMarker.addTo(this.map);
-                this.map.setView([this.search.latlng.lat, this.search.latlng.lng], 14, {
+                this.map.setView([this.search.latlng.lat, this.search.latlng.lng], SET_ZOOM, {
                     animate: false,
                 });
                 this.searchMarker.openPopup();
@@ -224,6 +231,12 @@
                     pan: {
                         duration: 10
                     }
+                });
+            },
+            // при клике объекта с базы устанавливаем центр
+            SetCenter(item){
+                this.map.setView([item.location.coordinates[1],item.location.coordinates[0]], SET_ZOOM, {
+                    animate: false,
                 });
             }
         }

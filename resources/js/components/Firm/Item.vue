@@ -49,11 +49,12 @@
                     <use xlink:href="/img/svg/sprite.svg#map_marker"/>
                 </svg>
             </router-link>
+            <favorite-item :firm="firm"></favorite-item>
             <br/>
             <br/>
         </div>
 
-        <div v-if="firm.others" class="otherLinkMinimum">
+        <div v-if="firm.basic==1&&firm.others" class="otherLinkMinimum">
                    <router-link
                        @click.native="clickRouterLinkActive"
                        v-for="(other,index) in firm.others"
@@ -62,18 +63,15 @@
                        :to="{name:'object', params: { id: other.id }}"
                    >{{other.title}}</router-link>
         </div>
-
-        <a
-            v-if="firm.others&&firm.others.length>5"
+        <a  v-if="firm.basic==1&&firm.others&&firm.others.length>5"
             href="#"
-            class="panel-block__link-add firm_others_link"
-        >
+            class="panel-block__link-add firm_others_link" >
             <span>{{$t('show_othner_firm')}}</span>
             <svg class="icon icon-map_marker">
                 <use xlink:href="/img/svg/sprite.svg#map_marker"/>
             </svg>
         </a>
-        <div class="firm_others" style="display:none;" v-if="firm.others&&firm.others.length>5">
+        <div class="firm_others" style="display:none;" v-if="firm.basic==1&&firm.others&&firm.others.length>5">
             <router-link
                 @click.native="clickRouterLinkActive"
                 v-for="(other,index) in firm.others"
@@ -83,6 +81,8 @@
             >{{other.title}}
             </router-link>
         </div>
+
+
         <div class="h6 text-primary fw-300">
             {{firm.address}}
             <br/>
@@ -93,17 +93,35 @@
         <!--       рейтинг            -->
         <review-stars :start_value="firm.rating" :disabled="true" classMy="  "></review-stars>
         <!--       рейтинг етв           -->
-        <time-work v-if="firm.time_work" :time_value="firm.time_work"></time-work>
-        <favorite-item :firm="firm"></favorite-item>
+        <time-work v-if="firm.time_work&&firm.timeworkstatus!==1" :time_value="firm.time_work"></time-work>
+
+        <div class="text-left mt-a"  v-if="firm.basic==0&&firm.others.length>0">
+            <router-link class="tdn text-body"
+                         :to="{name:'object', params: { id: firm.basic_id }}">
+                   {{$t('back_basic')}}
+            </router-link>
+        </div>
     </div>
 </template>
 <script>
+    import {mapGetters} from "vuex";
     import TimeWork from "~/components/Firm/TimeWork";
     import ReviewStars from "~/components/Firm/ReviewStars.vue";
     import FavoriteItem from "~/components/Firm/FavoriteItem.vue";
 
     export default {
         name: "Item",
+        data(){
+            return {
+                basic_id:"",
+                basic_title:"",
+            }
+        },
+        computed:{
+            ...mapGetters({
+                categories: "firms/categories",
+            })
+        },
         components: {TimeWork, ReviewStars,FavoriteItem},
         props: {
             firm: {
@@ -115,6 +133,7 @@
                 default: false
             }
         },
+
         mounted() {
             $(".firm_others_link").click(function (e) {
                 e.preventDefault();

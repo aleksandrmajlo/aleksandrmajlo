@@ -13,13 +13,15 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <link rel="icon" type="image/png"  href="{{asset('favicon.png')}}">
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('libs/swiper/css/swiper.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('libs/@fancyapps/fancybox/jquery.fancybox.min.css') }}"/>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&amp;display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-    crossorigin=""/>
+          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+          crossorigin=""/>
     <link href="{{ asset('css/main.min.css') }}" rel="stylesheet">
     <link href="{{ asset('dist/css/app.css') }}" rel="stylesheet">
 
@@ -58,14 +60,15 @@
                                 <span> </span>
                             </div>
                             <span class="search-block__title" id="searchTitleDescop">
-                                    <router-link style="color: #fff;text-decoration: none;" to="/"  @click.native="clickRouterLinkActive" >
+                                    <router-link style="color: #fff;text-decoration: none;" to="/"
+                                                 @click.native="clickRouterLinkActive">
                                          wikirent.info
                                     </router-link>
                             </span>
                             <search-block v-cloak></search-block>
                         </div>
                     </div>
-                    <login-block ></login-block>
+                    <login-block></login-block>
                 </div>
             </div>
         </div>
@@ -89,22 +92,17 @@
             </div>
         </footer>
     </div>
-
 </div>
-
-
 {{-- Global configuration object --}}
 <script>
     window.config = @json($config);
 </script>
-
 <script src="/libs/jquery/jquery.min.js"></script>
 <script src="/libs/picturefill/picturefill.min.js"></script>
 <script src="/libs/object-fit-images/ofi.min.js"></script>
 <script src="/libs/@fancyapps/fancybox/jquery.fancybox.min.js"></script>
 <script src="/libs/swiper/js/swiper.min.js"></script>
 <script src="/libs/svg4everybody/svg4everybody.min.js"></script>
-
 <script defer src="{{ asset('dist/js/app.js') }}"></script>
 
 </body>

@@ -25,17 +25,16 @@ class UserController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new User());
+        $grid->column('id', __('ID'))->display(function($id){
+            return '<a href="/admin/users/'.$id.'/edit">'.$id.'</a>';
+        })->sortable();
+        $grid->column('email', __('Email'))->display(function($title){
+            return '<a href="/admin/users/'.$this->id.'/edit">'.$title.'</a>';
+        })->sortable();
+        $grid->column('status','Статус')->switch();
+        $grid->column('name', __('Имя'));
 
-
-
-        $grid->column('id', __('Id'));
-//        $grid->('status')->switch();
-        $grid->column('status')->switch();
-//        $grid->switch('status', __('Status'));
-        $grid->column('name', __('Name'));
-        $grid->column('email', __('Email'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('created_at', __('Дата регистрации'));
 
         return $grid;
     }
@@ -50,11 +49,10 @@ class UserController extends AdminController
     {
         $show = new Show(User::findOrFail($id));
 
-        $show->field('id', __('Id'));
-        $show->field('name', __('Name'));
+        $show->field('id', __('ID'));
+        $show->field('name', __('Имя'));
         $show->field('email', __('Email'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+        $show->field('created_at', __('Дата регистрации'));
 
         return $show;
     }
@@ -68,10 +66,10 @@ class UserController extends AdminController
     {
         $form = new Form(new User());
 
-        $form->switch('status', __('Status'));
-        $form->text('name', __('Name'));
+        $form->switch('status', __('Статус'));
+        $form->text('name', __('Имя'));
         $form->email('email', __('Email'));
-        $form->password('password', __('Password'));
+        $form->password('password', __('Пароль'));
 
         return $form;
     }

@@ -1,14 +1,13 @@
 <template>
-
     <div class="col  d-lg-block">
         <div class="dropdown dropdown--js">
             <div v-if="!$auth.check()||!check">
-                <router-link to="/login" @click.native="clickRouterLinkActive"
+                <a href="#" @click.prevent="showForm"
                              class="dropdown__toggle  d-none d-lg-block">
                     <svg class="icon icon-user">
                         <use xlink:href="/img/svg/sprite.svg#user"/>
                     </svg>
-                </router-link>
+                </a>
                 <div class="dropdown__block dropdown__block--form" :class="{active:isLogin}">
                     <div class="form-wrap">
                         <div class="alert alert-danger" v-if="login_error">
@@ -31,7 +30,7 @@
                                 <input
                                     class="form-wrap__input form-control"
                                     type="password"
-                                    placeholder="Password"
+                                    :placeholder="$t('pass_form')"
                                     v-model="password"
                                     :class="{'is-invalid':has_error && errors.password}"
                                 />
@@ -39,12 +38,11 @@
                             </div>
                             <button class="btn btn-primary btn-block mb-2" type="submit">{{$t('login_button_send')}}
                             </button>
-                            <router-link
-                                class="btn btn-outline-primary btn-block"
-                                @click.native="hideLogin"
-                                to="/register"
+                            <a  class="btn btn-outline-primary btn-block"
+                                @click.prevent="registerShow"
+                                href="#"
                             >{{$t('login_button_reg')}}
-                            </router-link>
+                            </a>
                         </form>
                     </div>
                 </div>
@@ -63,7 +61,7 @@
 </template>
 <script>
     import {mapGetters} from "vuex";
-
+    import {eventBus} from '~/app'
     export default {
         name: "LoginBlock",
         data() {
@@ -94,8 +92,13 @@
             }
         },
         methods: {
-            hideLogin() {
+            showForm(){
+                this.isLogin = !this.isLogin;
+            },
+            // показать форму регистрации
+            registerShow() {
                 this.isLogin = false;
+                eventBus.$emit('showRegister');
             },
             login() {
                 var app = this;
@@ -106,6 +109,13 @@
                     },
                     success: function () {
                         this.$router.push({name: "account"});
+                        app.email="";
+                        app.password="";
+
+                        app.login_error = false;
+                        app.error = ""
+                        app.errors = {}
+                        app.has_error = false;
                     },
                     error: function (res) {
                         if (typeof res.response.data.error !== "undefined") {

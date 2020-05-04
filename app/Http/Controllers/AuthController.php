@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\User;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
-
 class AuthController extends Controller
 {
+
+
+    //войти в логин после
+    public $loginAfterSignUp = false;
 
     public function register(Request $request)
     {
@@ -26,12 +30,20 @@ class AuthController extends Controller
                 'errors' => $v->errors()
             ], 422);
         }
+
         $user = new User;
         $user->email = $request->email;
         $user->name = $request->name;
-        $user->password = bcrypt($request->password);
+        $user->status = 1;
+        //$user->password = bcrypt($request->password);
+        $user->password = $request->password;
         $user->save();
-        return response()->json(['status' => 'success'], 200);
+
+        $token = auth()->login($user);
+        return response()->json([
+            'status' => 'success'
+        ], 200)->header('Authorization', $token);
+
     }
 
     public function login(Request $request)
@@ -47,11 +59,8 @@ class AuthController extends Controller
                 'errors' => $v->errors()
             ], 422);
         }
-//        $credentials = $request->only('email', 'password');
         $credentials=['email' => $request->email, 'password' => $request->password, 'status' => 1];
-
         if ($token = $this->guard()->attempt($credentials)) {
-
             return response()->json([
                 'status' => 'success'
             ], 200)->header('Authorization', $token);
@@ -71,7 +80,6 @@ class AuthController extends Controller
     public function user(Request $request)
     {
         $user = User::find(Auth::user()->id);
-
         return response()->json([
             'status' => 'success',
             'user' => $user

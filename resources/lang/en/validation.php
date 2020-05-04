@@ -128,36 +128,22 @@ return [
     | specify a specific custom language line for a given attribute rule.
     |
     */
-
     'custom' => [
-        'custom' => [
-            'email' => [
-                'required' => 'Нам нужно знать ваш адрес электронной почты!',
-                'email' => 'Укажите корректный email',
-                'unique' => 'Данный email зарегистрирован'
-            ],
-            'password' => [
-                'required' => 'Укажите пароль',
-                'min' => 'Пароль должен содержать минимум 6 символов',
-                'confirmed' => "Пароли не совпадают"
-            ],
-            'name' => [
-                'required' => 'Укажите имя',
-            ]
+        'email' => [
+            'required' => 'We need to know your email address.!',
+            'email' => 'Please enter a valid email',
+            'unique' => 'This email is registered'
         ],
+        'password' => [
+            'required' => 'Enter password',
+            'min' => 'Password must contain at least 6 characters',
+            'confirmed' => "Password mismatch"
+        ],
+        'name' => [
+            'required' => 'Enter a name',
+        ]
     ],
     'notFirm'=>'There is no such object',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Attributes
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used to swap our attribute placeholder
-    | with something more reader friendly such as "E-Mail Address" instead
-    | of "email". This simply helps us make our message more expressive.
-    |
-    */
 
     'attributes' => [],
 

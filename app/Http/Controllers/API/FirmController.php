@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Banner;
 use App\Firm;
 use App\Upload;
+use App\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -62,10 +63,12 @@ class FirmController extends Controller
     {
         $id = $request->id;
         try {
-            $firm = Firm::select('id', 'title', 'address', 'type', 'time_work', 'service', 'email', 'phone', 'meta_title', 'meta_description', 'location', 'photos','status')->findOrFail($id);
+
+            $firm = Firm::select('id', 'title','basic', 'address', 'category_id', 'time_work', 'service', 'email', 'phone', 'meta_title', 'meta_description', 'location', 'photos','status')->findOrFail($id);
              if($firm->status===0){
                  return response()->json(['error' => trans('validation.notFirm')], 404);
              }
+
             $firm->photos = $firm->allphotos;
             $firm->rating=intval($firm->ratingsAvg());
             $lat = $firm->location->getLat();
@@ -74,8 +77,45 @@ class FirmController extends Controller
             $coord = $lat . "_" . $lng;
             $firm->coord=$coord;
             $firm->lat_lng=['lat'=>$lat,'lng'=>$lng];
-            $firm->others = DB::select("SELECT id,title FROM firms WHERE st_distance_sphere(location, POINT('$lng',$lat)) <= 100 AND id!=".$id." AND status=1 ORDER BY id DESC");
+            // показать ли режим работы в категории
+            $firm->timeworkstatus=$firm->category->timeworkstatus;
 
+            $firm->others = DB::select("SELECT id,title,basic FROM firms WHERE st_distance_sphere(location, POINT('$lng',$lat)) <= 100 AND id!=".$id." AND status=1 ORDER BY id DESC");
+
+            // определяем базовый объект ************************
+            if((int)$firm->basic===0&&count($firm->others)>0){
+                $ids=[$firm->id];
+                $others_basic=false;
+                $basic_id=false;
+                foreach ($firm->others as $other){
+                    if((int)$other->basic==1){
+                        $others_basic=true;
+                        $basic_id=(int)$other->id;
+                        break;
+                    }else{
+                        $ids[]=(int)$other->id;
+                    }
+                }
+
+                if(!$others_basic){
+                    $min_id=min($ids);
+                    $basic_id=$min_id;
+                    // если
+                    if((int)$firm->id==$min_id){
+                        $firm->basic=1;
+                    }else{
+                        foreach ($firm->others as $key=>$other){
+                            if((int)$other->id==$min_id){
+                                $other->basic=1;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                $firm->basic_id=$basic_id;
+            }
+            // определяем базовый объект end ********************
             return response()->json(
                 [
                     'firm' => $firm,
@@ -95,7 +135,7 @@ class FirmController extends Controller
 
         $firm->title = $firm_req['title'];
         $firm->service = $firm_req['service'];
-        $firm->type = $firm_req['type'];
+        $firm->category_id = $firm_req['category_id'];
         $firm->phone = $firm_req['phone'];
         $firm->email = $firm_req['email'];
         $firm->site = $firm_req['site'];
@@ -165,4 +205,10 @@ class FirmController extends Controller
         $firm->save();
         return response()->json(['suc'=>true]);
     }
+
+    public function getCategories(){
+        $categories=Category::select('title_en','title_uk','title_ru','id','timeworkstatus')->where('published',1)->get()->toArray();
+        return response()->json(['categories'=>$categories]);
+    }
+
 }

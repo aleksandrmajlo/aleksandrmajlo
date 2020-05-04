@@ -10,7 +10,7 @@
                 </div>
                 <banner-top></banner-top>
             </div>
-            <div class="panel-block__body">
+            <div class="panel-block__body" style="padding-bottom:55px;">
                 <h4 class="text-center" v-html="$t('error_text')"></h4>
                 <form @submit.prevent="checkForm" class="formMess">
                     <div class="form-group ">
@@ -26,8 +26,15 @@
                                   :class="{ 'is-invalid': error.messange }"
                                   id="mess" class="form-control"></textarea>
                     </div>
-                    <dropzone-comp ref="upload" v-on:SetImagesChild="SetImages"></dropzone-comp>
-                    <button :disabled="disabled" type="submit" class="btn btn-primary">{{$t('form_submit')}}</button>
+                    <div class="form-group">
+                        <dropzone-comp ref="upload" v-on:SetImagesChild="SetImages"></dropzone-comp>
+                    </div>
+
+                    <div class="form-group" >
+                        <button :disabled="disabled" type="submit" class="btn btn-primary">{{$t('form_submit')}}</button>
+                    </div>
+
+
                 </form>
             </div>
             <banner-botom classNone="d-lg-none"></banner-botom>

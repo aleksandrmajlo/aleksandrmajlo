@@ -1,10 +1,18 @@
 <template>
 
     <div class="modal-reg" v-show="isShow">
+
+
         <div class="form-wrap">
+
+            <a class="closeRegister" href="#" @click.prevent="isShow=false">
+                <img src="/img/svg/times-solid.svg">
+            </a>
+
             <form autocomplete="off" @submit.prevent="register" v-if="!success" method="post">
                 <div class="alert alert-danger" v-if="has_error && !success">
-                    <p v-if="error == 'registration_validation_error'">Ошибка (и) проверки, пожалуйста, смотрите сообщение (я) ниже.</p>
+                    <p v-if="error == 'registration_validation_error'">Ошибка (и) проверки, пожалуйста, смотрите
+                        сообщение (я) ниже.</p>
                     <p v-else>{{$t('error_reg')}}</p>
                 </div>
                 <div class="form-wrap__input-wrap form-group">
@@ -14,7 +22,8 @@
                     <span class="invalid-feedback" v-if="has_error && errors.name">{{ errors.name[0] }}</span>
                 </div>
                 <div class="form-wrap__input-wrap form-group">
-                    <input class="form-wrap__input form-control form-control-lg" type="password" :placeholder="$t('pass_form')"
+                    <input class="form-wrap__input form-control form-control-lg" type="password"
+                           :placeholder="$t('pass_form')"
                            :class="{'is-invalid':has_error && errors.password}"
                            v-model="password"/>
                     <span class="invalid-feedback" v-if="has_error && errors.password">{{ errors.password[0] }}</span>
@@ -26,26 +35,32 @@
                 <div class="form-wrap__input-wrap form-group">
                     <input class="form-wrap__input form-control form-control-lg" type="email" placeholder="@mail"
                            v-model="email"
-                           :class="{'is-invalid':has_error && errors.email}" />
+                           :class="{'is-invalid':has_error && errors.email}"/>
                     <span class="invalid-feedback" v-if="has_error && errors.email">{{ errors.email[0] }}</span>
                 </div>
-                <button class="btn btn-primary btn-lg btn-block" type="submit">{{$t('button_reg')}}</button>
-                <router-link @click.native="clickRouterLinkActive" class="btn btn-primary btn-lg btn-block btn-reset" to="/">{{$t('cancel_reg')}}</router-link>
+                <button class="btn btn-primary btn-lg btn-block"
+                        :disabled="disabled"
+                        type="submit">{{$t('button_reg')}}</button>
+                <a @click.prevent="isShow=false" class="btn btn-primary btn-lg btn-block btn-reset" href="#">
+                    {{$t('cancel_reg')}}
+                </a>
             </form>
-            <p  v-if="success">
-                Вы зарегистрировались.Войдите под своим логином
-            </p>
+            <h4 v-if="success" >
+                {{$t('reg_succes',{name:name})}}
+            </h4>
         </div>
     </div>
 
 </template>
 
 <script>
+    import {eventBus} from '~/app'
     export default {
         name: "RegistrarBlock",
         data() {
             return {
                 isShow: false,
+                disabled:false,
                 name: '',
                 email: '',
                 password: '',
@@ -68,9 +83,15 @@
                 }
             }
         },
+        created() {
+            eventBus.$on('showRegister', () => {
+                this.showRegisterForm();
+            })
+        },
         methods: {
             register() {
-                var app = this
+                var app = this;
+                app.disabled=true;
                 this.$auth.register({
                     data: {
                         name: app.name,
@@ -79,18 +100,24 @@
                         password_confirmation: app.password_confirmation
                     },
                     success: function () {
-                        app.success = true
-                        this.$router.push({
-                            name: 'login',
-                            params: {successRegistrationRedirect: true}
-                        })
+                        app.has_error = false
+                        app.errors = {};
+                        app.success = true;
+                        app.disabled=false;
+                        setTimeout(()=>{
+                            app.isShow = false;
+                        },3000)
                     },
                     error: function (res) {
                         app.has_error = true
                         app.error = res.response.data.error
-                        app.errors = res.response.data.errors || {}
+                        app.errors = res.response.data.errors || {};
+                        app.disabled=false;
                     }
                 })
+            },
+            showRegisterForm() {
+                this.isShow = true;
             }
         }
     }

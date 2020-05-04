@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Nagy\LaravelRating\Traits\Rate\Rateable;
-
+use App\Category;
 class Firm extends Model
 {
     use Sluggable;
@@ -128,5 +128,8 @@ class Firm extends Model
         return $photos_res;
     }
 
-
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

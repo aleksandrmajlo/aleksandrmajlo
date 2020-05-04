@@ -29,10 +29,19 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('users', 'UserController@index');
     Route::get('users/{id}', 'UserController@show');
 });
+
+Route::group(['namespace' => 'API','middleware' => 'cors'], function () {
+    // Yandex Geo
+    Route::get('getLatLng', 'YandexgeoController@getLatLng');
+});
+
 Route::group(['namespace' => 'API'], function () {
+
     Route::get('getFirms', 'FirmController@index');
     Route::post('getFirm', 'FirmController@getFirm');
+    Route::post('getCategories', 'FirmController@getCategories');
     Route::post('getReview', 'ReviewController@getReview');
+ 
     // поиск
     Route::get('search', 'SearchController@index');
     // сохранение времени работы
@@ -43,6 +52,7 @@ Route::group(['namespace' => 'API'], function () {
     Route::post('my_favorite', 'UserController@my_favorite');
     // form
     Route::post('send', 'FormController@send');
+
 });
 Route::group(['middleware' => 'auth:api','namespace' => 'API'], function () {
      Route::post('addFirm', 'FirmController@store');

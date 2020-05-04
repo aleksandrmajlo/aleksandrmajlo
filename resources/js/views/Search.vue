@@ -37,8 +37,9 @@
         components: {BannerTop, BannerBotom, ItemsLoop},
         data() {
             return {
-                coord: null,
-                city: null,
+                // coord: null,
+                // city: null,
+                title: null,
                 q: null,
                 search_firms: null,
             }
@@ -52,15 +53,16 @@
             $route: {
                 immediate: true,
                 handler(to, from) {
-                    if (typeof this.$route.query.coord != "undefined") {
-                        this.coord = this.$route.query.coord;
+
+                    if (typeof this.$route.query.title != "undefined") {
+                        this.title = this.$route.query.title;
                     }
                     if (typeof this.$route.query.q !== "undefined") {
                         this.q = this.$route.query.q;
                     }
-                    if (typeof this.$route.query.city !== "undefined") {
-                        this.city = this.$route.query.city;
-                    }
+                    // if (typeof this.$route.query.title !== "undefined") {
+                    //     this.city = this.$route.query.city;
+                    // }
                     this.search();
                 }
             }
@@ -68,19 +70,30 @@
         methods: {
             search() {
                 let data = {};
-                if (this.coord !== null) {
-                    data.coord = this.coord;
+                if (this.title !== null) {
+                    data.title = this.title;
                 } else if (this.q !== null) {
                     data.q = this.q;
                 }
-                if (this.city !== null) {
-                    data.city = this.city;
-                }
+                // if (this.city !== null) {
+                //     data.city = this.city;
+                // }
                 axios.get('search', {
                     params: data
                 })
                     .then(response => {
                         this.search_firms = response.data.firms;
+                        // console.log('search 86')
+                        // console.log(response.data)
+                        if (response.data.latlng) {
+
+                            this.$store.commit("map/SET_SEARCH", {
+                                value: this.title,
+                                latlng: response.data.latlng,
+                                type: 'address'
+                            });
+
+                        }
                     })
                     .catch(error => {
 

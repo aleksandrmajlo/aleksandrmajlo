@@ -1,5 +1,6 @@
 <template>
-  <a
+
+    <a
     v-if="banner!==null"
     class="panel-block__footer"
     target="_blank"
@@ -9,6 +10,7 @@
     <div class="panel-block__img-wrap">
       <img :src="banner.photosmall" alt />
     </div>
+
     <div class="panel-block__text">{{banner.description}}</div>
   </a>
 </template>

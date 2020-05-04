@@ -26,7 +26,9 @@ class InfoController extends AdminController
     {
         $grid = new Grid(new Info());
 
-        $grid->column('id', __('Id'));
+        $grid->column('id', __('ID'))->display(function($id){
+            return '<a href="/admin/infos/'.$id.'/edit">'.$id.'</a>';
+        })->sortable();
 
         $grid->column('theme', 'Тема')->display(function ($themeId)  {
             $theme = config('info');
@@ -34,9 +36,9 @@ class InfoController extends AdminController
         });
 
         $grid->column('email', __('Email'));
-        $grid->column('messange', __('Messange'));
+        $grid->column('messange', __('Cообщение'));
         $grid->column('status', __('Ответ клиенту'));
-        $grid->column('created_at', __('Created at'));
+        $grid->column('created_at', __('Дата добавления'))->sortable();
         $grid->column('ip', __('IP'));
 
         $grid->filter(function ($filter) {
@@ -62,12 +64,11 @@ class InfoController extends AdminController
         $show = new Show(Info::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->field('theme', __('Theme'));
+        $show->field('theme', __('Тема'));
         $show->field('email', __('Email'));
-        $show->field('messange', __('Messange'));
-        $show->field('photos', __('Photos'));
-        $show->field('status', __('Status'));
-        $show->field('created_at', __('Created at'));
+        $show->field('messange', __('Cообщение'));
+        $show->field('status', __('Ответ клиенту'));
+        $show->field('created_at', __('Дата добавления'));
         $show->field('ip', __('IP'));
 
         return $show;
@@ -88,8 +89,8 @@ class InfoController extends AdminController
 
         $form->select('theme', 'Тема')->options($theme)->readOnly();
         $form->email('email', __('Email'))->readonly();
-        $form->textarea('messange', __('Messange'))->readonly();
-        $form->multipleImage('photos', __('Photos'));
+        $form->textarea('messange', __('Cообщение'))->readonly();
+        $form->multipleImage('photos', __('Фото'));
 
         $form->ip('ip', __('IP'));
 

@@ -166,7 +166,7 @@ const routes = [
         name: 'favorite',
         component: Favorite,
         meta: {
-            auth: true
+            auth: undefined
         }
     },
 

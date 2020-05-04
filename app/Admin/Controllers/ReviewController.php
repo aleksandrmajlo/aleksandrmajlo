@@ -26,14 +26,19 @@ class ReviewController extends AdminController
     {
         $grid = new Grid(new Review());
 
-        $grid->column('id', __('Id'));
-        $grid->column('status')->switch();
-        $grid->firm()->title();
-        $grid->user()->email();
-        $grid->column('comment', __('Comment'));
+
+        $grid->column('id', __('ID'))->display(function($id){
+            return '<a href="/admin/reviews/'.$id.'/edit">'.$id.'</a>';
+        })->sortable();
+
+
+        $grid->column('status','Cтатус')->switch();
+        $grid->firm()->title('Объект');
+        $grid->user()->email('Пользователь');
+        $grid->column('comment', __('Комментарий'));
         $grid->column('value', __('Оценка'));
-        $grid->column('created_at', __('Created at'));
-        $grid->ip('ip', __('Ip'));
+        $grid->column('created_at', __('Дата добавления'));
+        $grid->ip('ip', __('IP'));
 
         $grid->filter(function ($filter) {
             $filter->disableIdFilter();
@@ -55,13 +60,13 @@ class ReviewController extends AdminController
     protected function detail($id)
     {
         $show = new Show(Review::findOrFail($id));
-        $show->field('id', __('Id'));
+        $show->field('id', __('ID'));
         $show->field('comment', __('Comment'));
-        $show->field('value', __('Value'));
+        $show->field('value', __('Оценка'));
         $show->field('user_id', __('User id'));
-        $show->field('created_at', __('Created at'));
-        $show->field('status', __('Status'));
-        $show->field('ip', __('Ip'));
+        $show->field('created_at', __('Дата добавления'));
+        $show->field('status', __('Cтатус'));
+        $show->field('ip', __('IP'));
         $show->field('firm_id', __('Firm id'));
 
         return $show;
@@ -75,16 +80,16 @@ class ReviewController extends AdminController
     protected function form()
     {
         $form = new Form(new Review());
-        $form->switch('status', __('Status'));
-        $form->textarea('comment', __('Comment'));
-        $form->number('value', __('Оценка'))->min(0)->max(5);
-        $form->multipleImage('photos', __('Photos'))->removable();
+        $form->switch('status', __('Cтатус'));
+        $form->textarea('comment', __('Комментарий'));
+        $form->number('value', __('Оценка'))->min(0)->max(5)->required();
+        $form->multipleImage('photos', __('Фото'))->removable();
 
-        $form->select('user_id', 'Пользователь')->options(\App\User::all()->pluck('email', 'id'));
-        $form->select('firm_id', 'Объект')->options(\App\Firm::all()->pluck('title', 'id'));
+        $form->select('user_id', 'Пользователь')->options(\App\User::all()->pluck('email', 'id'))->required();
+        $form->select('firm_id', 'Объект')->options(\App\Firm::all()->pluck('title', 'id'))->required();
 
 
-        $form->ip('ip', __('Ip'));
+        $form->ip('ip', __('IP'));
         $form->tools(function (Form\Tools $tools) {
             $tools->disableView();
         });

@@ -26,15 +26,16 @@
 								 </svg>
                           </span>{{$t('favorite')}}
             </router-link>
-
-            <router-link :to="{name:'addobject'}" @click.native="clickRouterLinkActive('auth')" class="nav__link">
+            <router-link :to="{name:'addobject'}"
+                         @click.native="clickRouterLinkActive('auth')" class="nav__link">
                      <span class="nav__icon-wrap">
 						 <svg class="icon icon-map_marker ">
 							  <use xlink:href="/img/svg/sprite.svg#map_marker"></use>
 						 </svg>
                      </span>{{ $t('addObject') }}
             </router-link>
-            <router-link v-if="mobile" :to="{name:'account'}" @click.native="clickRouterLinkActive" class="nav__link">
+            <router-link v-if="mobile" :to="{name:'account'}"
+                         @click.native="clickRouterLinkActive" class="nav__link">
                  <span class=" nav__icon-wrap">
 						 <svg class="icon icon-map_marker ">
 							  <use xlink:href="/img/svg/sprite.svg#user"></use>
@@ -44,7 +45,7 @@
             </router-link>
         </div>
         <div class="dropdown__divider"></div>
-        <div class="nav text-center">
+        <div class="nav text-center bottomLinkNav">
             <router-link @click.native="clickRouterLinkActive"
                          class="nav__link" :to="{name:'advertising'}">
                 {{$t('advertising_in')}} wikirent.info

@@ -1,5 +1,5 @@
 <template>
-    <div class="panel-block__input-wrap form-group">
+    <div class="panel-block__input-wrap form-group" id="searchPlaceWrap">
         <div class="searcBlockPlace">
             <input
                 id="my-input-search"
@@ -33,12 +33,11 @@
         },
         created() {
             eventBus.$on('setPlace', () => {
-                this.changePlace()
-
+                this.changePlace();
             })
         },
         mounted() {
-
+            let app = this;
             this.places = places({
                 appId: appId,
                 apiKey: apiKey,
@@ -49,19 +48,42 @@
                 aroundLatLngViaIP: false
             });
             this.places.on("change", e => {
+                let loader = this.showLoader({
+                    container: document.getElementById("searchPlaceWrap"),
+                    loader: 'bars',
+                    isFullPage: false
+                });
                 if (e.suggestion.length === 0) {
                     this.$store.commit("map/SET_SEARCH", {
                         value: "",
                         latlng: null,
                         type: false
                     });
+                    loader.hide()
                 } else {
                     let res = e.suggestion;
-                    this.$store.commit("map/SET_SEARCH", {
-                        value: res.value,
-                        type: res.type,
-                        latlng: res.latlng
-                    });
+                    axios.get('https://wikirent.info/api/getLatLng', {params: {address: res.value}})
+                        .then(response => {
+                            // console.log(response.data.latlng, ' api')
+                            app.$store.commit("map/SET_SEARCH", {
+                                value: res.value,
+                                type: res.type,
+                                latlng: response.data.latlng
+                            });
+                        })
+                        .catch(function (error) {
+                            // console.log(res.latlng, 'local')
+                            app.$store.commit("map/SET_SEARCH", {
+                                value: res.value,
+                                type: res.type,
+                                latlng: res.latlng
+                            });
+
+                        })
+                        .then(function () {
+                            loader.hide()
+                        });
+
                 }
             });
             this.places.on("clear", e => {
@@ -71,7 +93,6 @@
                     type: false
                 });
             });
-
             /*
             if (this.$route.query.address !== undefined) {
                 this.places.setVal(this.$route.query.address);
@@ -82,7 +103,6 @@
                 })
             }
            */
-
         },
         methods: {
             changePlace() {

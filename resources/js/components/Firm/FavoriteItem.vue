@@ -1,11 +1,11 @@
 <template>
     <div class="favoriteBlock">
-        <a v-if="!inFavorite" href="#" @click.prevent="addFavotite">
-            {{$t('addFavorite')}}
+        <a v-if="!inFavorite"   class="panel-block__link-add" href="#" @click.prevent="addFavotite">
+            <span>{{$t('addFavorite')}}</span>
             <img src="/img/round-favorite-border.svg">
         </a>
-        <a v-else href="#" @click.prevent="removeFavotite">
-            {{$t('removeFavorite')}}
+        <a v-else href="#"   class="panel-block__link-add" @click.prevent="removeFavotite">
+            <span>{{$t('removeFavorite')}}</span>
             <img src="/img/sharp-favorite.svg">
         </a>
     </div>
