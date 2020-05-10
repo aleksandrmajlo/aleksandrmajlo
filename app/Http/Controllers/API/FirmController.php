@@ -21,10 +21,16 @@ class FirmController extends Controller
     {
         $this->photos_path = public_path('/upload');
     }
+
     // получение координат для вывода на карте
     public function index()
     {
-        $firms = Firm::where('status', 1)->select('id', 'title', 'address', 'location')->get();
+        $firms = Firm::where('status', 1)->select('id', 'title',
+            'address',
+            'address_uk',
+            'address_ru',
+            'address_en',
+            'location')->get();
         $res = [];
         foreach ($firms as $k => $firm) {
             $lat = $firm->location->getLat();
@@ -35,6 +41,9 @@ class FirmController extends Controller
                     "id" => $firm->id,
                     "title" => $firm->title,
                     "address" => $firm->address,
+                    'address_uk' => $firm->address_uk,
+                    'address_ru' => $firm->address_ru,
+                    'address_en' => $firm->address_en,
                 ];
             } else {
                 $res[$coord] = [];
@@ -42,78 +51,87 @@ class FirmController extends Controller
                     "id" => $firm->id,
                     "title" => $firm->title,
                     "address" => $firm->address,
-                    "coord"=>['lat' => $lat, "lng" => $lng]
+                    'address_uk' => $firm->address_uk,
+                    'address_ru' => $firm->address_ru,
+                    'address_en' => $firm->address_en,
+                    "coord" => ['lat' => $lat, "lng" => $lng]
                 ];
             }
         }
-        $banner_home=Banner::select('photobig','photosmall','link','description')->find(1);
-        $banner_top=Banner::select('photobig','photosmall','link','description')->find(2);
-        $banner_bottom=Banner::select('photobig','photosmall','link','description')->find(3);
+        $banner_home = Banner::select('photobig', 'photosmall', 'link', 'description')->find(1);
+        $banner_top = Banner::select('photobig', 'photosmall', 'link', 'description')->find(2);
+        $banner_bottom = Banner::select('photobig', 'photosmall', 'link', 'description')->find(3);
 
         return response()->json([
             'firms' => $res,
-            'banner_home'=>$banner_home,
-            'banner_bottom'=>$banner_bottom,
-            'banner_top'=>$banner_top,
+            'banner_home' => $banner_home,
+            'banner_bottom' => $banner_bottom,
+            'banner_top' => $banner_top,
         ]);
 
     }
+
     // получение одиночной фирмы
     public function getFirm(Request $request)
     {
         $id = $request->id;
         try {
 
-            $firm = Firm::select('id', 'title','basic', 'address', 'category_id', 'time_work', 'service', 'email', 'phone', 'meta_title', 'meta_description', 'location', 'photos','status')->findOrFail($id);
-             if($firm->status===0){
-                 return response()->json(['error' => trans('validation.notFirm')], 404);
-             }
+            $firm = Firm::select('id', 'title', 'basic', 'address',
+                'address_uk',
+                'address_ru',
+                'address_en',
+                'category_id',
+                'time_work', 'service', 'email', 'phone', 'meta_title', 'meta_description', 'location', 'photos', 'status')->findOrFail($id);
+            if ($firm->status === 0) {
+                return response()->json(['error' => trans('validation.notFirm')], 404);
+            }
 
             $firm->photos = $firm->allphotos;
-            $firm->rating=intval($firm->ratingsAvg());
+            $firm->rating = intval($firm->ratingsAvg());
             $lat = $firm->location->getLat();
             $lng = $firm->location->getLng();
 
             $coord = $lat . "_" . $lng;
-            $firm->coord=$coord;
-            $firm->lat_lng=['lat'=>$lat,'lng'=>$lng];
+            $firm->coord = $coord;
+            $firm->lat_lng = ['lat' => $lat, 'lng' => $lng];
             // показать ли режим работы в категории
-            $firm->timeworkstatus=$firm->category->timeworkstatus;
+            $firm->timeworkstatus = (int)$firm->category->timeworkstatus;
 
-            $firm->others = DB::select("SELECT id,title,basic FROM firms WHERE st_distance_sphere(location, POINT('$lng',$lat)) <= 100 AND id!=".$id." AND status=1 ORDER BY id DESC");
+            $firm->others = DB::select("SELECT id,title,basic FROM firms WHERE st_distance_sphere(location, POINT('$lng',$lat)) <= 100 AND id!=" . $id . " AND status=1 ORDER BY id DESC");
 
             // определяем базовый объект ************************
-            if((int)$firm->basic===0&&count($firm->others)>0){
-                $ids=[$firm->id];
-                $others_basic=false;
-                $basic_id=false;
-                foreach ($firm->others as $other){
-                    if((int)$other->basic==1){
-                        $others_basic=true;
-                        $basic_id=(int)$other->id;
+            if ((int)$firm->basic === 0 && count($firm->others) > 0) {
+                $ids = [$firm->id];
+                $others_basic = false;
+                $basic_id = false;
+                foreach ($firm->others as $other) {
+                    if ((int)$other->basic == 1) {
+                        $others_basic = true;
+                        $basic_id = (int)$other->id;
                         break;
-                    }else{
-                        $ids[]=(int)$other->id;
+                    } else {
+                        $ids[] = (int)$other->id;
                     }
                 }
 
-                if(!$others_basic){
-                    $min_id=min($ids);
-                    $basic_id=$min_id;
+                if (!$others_basic) {
+                    $min_id = min($ids);
+                    $basic_id = $min_id;
                     // если
-                    if((int)$firm->id==$min_id){
-                        $firm->basic=1;
-                    }else{
-                        foreach ($firm->others as $key=>$other){
-                            if((int)$other->id==$min_id){
-                                $other->basic=1;
+                    if ((int)$firm->id == $min_id) {
+                        $firm->basic = 1;
+                    } else {
+                        foreach ($firm->others as $key => $other) {
+                            if ((int)$other->id == $min_id) {
+                                $other->basic = 1;
                                 break;
                             }
                         }
                     }
                 }
 
-                $firm->basic_id=$basic_id;
+                $firm->basic_id = $basic_id;
             }
             // определяем базовый объект end ********************
             return response()->json(
@@ -167,6 +185,34 @@ class FirmController extends Controller
             }
 
         }
+
+        //получить название **********************************************
+        try {
+
+            $KEY = env('YANDEX_KEY');
+            $api = new \Yandex\Geo\Api($KEY);
+            $api->setPoint($request->location['lng'], $request->location['lat']);
+            $api->setLang('uk-UA')->setLimit(1)->load();
+            $response_uk = $api->getResponse();
+            $collection_uk = $response_uk->getList();
+
+            $api->setLang('en-US')->setLimit(1)->load();
+            $response_en = $api->getResponse();
+            $collection_en = $response_en->getList();
+
+            $api->setLang('ru-RU')->setLimit(1)->load();
+            $response_ru = $api->getResponse();
+            $collection_ru = $response_ru->getList();
+
+            $firm->address_uk = $collection_uk[0]->getAddress();
+            $firm->address_ru = $collection_ru[0]->getAddress();
+            $firm->address_en = $collection_en[0]->getAddress();
+            //получить название end **********************************************
+        } catch (Exception $e) {
+
+        }
+
+
         $firm->save();
         return response()->json(['succes' => true]);
     }
@@ -197,18 +243,20 @@ class FirmController extends Controller
         //
     }
 
-    public function saveTimeWork(Request $request){
-        $id=$request->id;
-        $res=$request->res;
-        $firm = Firm::find( $id);
+    public function saveTimeWork(Request $request)
+    {
+        $id = $request->id;
+        $res = $request->res;
+        $firm = Firm::find($id);
         $firm->time_work = $res;
         $firm->save();
-        return response()->json(['suc'=>true]);
+        return response()->json(['suc' => true]);
     }
 
-    public function getCategories(){
-        $categories=Category::select('title_en','title_uk','title_ru','id','timeworkstatus')->where('published',1)->get()->toArray();
-        return response()->json(['categories'=>$categories]);
+    public function getCategories()
+    {
+        $categories = Category::select('title_en', 'title_uk', 'title_ru', 'id', 'timeworkstatus')->where('published', 1)->get()->toArray();
+        return response()->json(['categories' => $categories]);
     }
 
 }

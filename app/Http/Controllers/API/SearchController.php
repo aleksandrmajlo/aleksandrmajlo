@@ -31,7 +31,6 @@ class SearchController extends Controller
         ]);
 
     }
-
     static function serchTitleName($title)
     {
 //        try {
@@ -76,6 +75,9 @@ class SearchController extends Controller
         $firms = Firm::where('status', 1)
             ->where(function ($query) use ($title) {
                 $query->where('title', 'like', '%' . $title . '%')
+                    ->orWhere('address_uk', 'like', '%' . $title . '%')
+                    ->orWhere('address_ru', 'like', '%' . $title . '%')
+                    ->orWhere('address_en', 'like', '%' . $title . '%')
                     ->orWhere('address', 'like', '%' . $title . '%');
             })
             ->select('id', 'title', 'address','location')
@@ -121,12 +123,16 @@ class SearchController extends Controller
 
     static function serchByQueryAddress($q)
     {
+        $local=\App::getLocale();
         $firms = Firm::where('status', 1)
             ->where(function ($query) use ($q) {
                 $query->where('title', 'like', '%' . $q . '%')
+                    ->orWhere('address_uk', 'like', '%' . $q . '%')
+                    ->orWhere('address_ru', 'like', '%' . $q . '%')
+                    ->orWhere('address_en', 'like', '%' . $q . '%')
                     ->orWhere('address', 'like', '%' . $q . '%');
             })
-            ->select('id', 'title', 'address','location')
+            ->select('id', 'title', 'address','address_'.$local,'location')
             ->get()->toArray();
         return $firms;
     }

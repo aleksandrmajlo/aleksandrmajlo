@@ -28,7 +28,7 @@
                    @click.native="serchLink(item)"
                    class="search-block__dropdown-item" >
                   <img src="/img/database.svg" alt/>
-                  {{item.title}} {{item.address}}
+                  {{item.title}} <span v-if="item['address_'+locale]">{{item['address_'+locale]}}</span><span v-else>{{item.address}}</span>
                </router-link>
               </span>
                 <span v-for="(item,index) in items" :key="item.id" v-if="item.type!==undefined">

@@ -114,10 +114,15 @@ class FirmController extends Controller
     {
         $form = new Form(new Firm());
 
-        $form->switch('status', __('Статус(активный неактивный)'));
+        $form->switch('status', __('Статус(активный или неактивный)'));
         $form->switch('basic', __('Основная организация в здании'));
         $form->text('title', __('Название'))->required();
-        $form->text('address', __('Адрес'))->required();
+        $form->text('address', __('Адрес(Пользователя)'))->required();
+
+        $form->text('address_uk', __('Адрес UK'));
+        $form->text('address_ru', __('Адрес RU'));
+        $form->text('address_en', __('Адрес EN'));
+
         $form->text('service', __('Сфера деятельности'))->required();
 
         $form->select('category_id', 'Категория')->options(\App\Category::all()->pluck('title_ru', 'id'))->required();

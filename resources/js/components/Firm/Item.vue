@@ -84,7 +84,7 @@
 
 
         <div class="h6 text-primary fw-300">
-            {{firm.address}}
+            <address-firm :firm="firm"></address-firm>
             <br/>
             <a v-if="firm.site!==null" :href="firm.site">{{firm.site}}</a>
             <br/>
@@ -93,7 +93,7 @@
         <!--       рейтинг            -->
         <review-stars :start_value="firm.rating" :disabled="true" classMy="  "></review-stars>
         <!--       рейтинг етв           -->
-        <time-work v-if="firm.time_work&&firm.timeworkstatus!==1" :time_value="firm.time_work"></time-work>
+        <time-work v-if="firm.time_work&&parseInt(firm.timeworkstatus)!==1" :time_value="firm.time_work"></time-work>
 
         <div class="text-left mt-a"  v-if="firm.basic==0&&firm.others.length>0">
             <router-link class="tdn text-body"
@@ -108,6 +108,7 @@
     import TimeWork from "~/components/Firm/TimeWork";
     import ReviewStars from "~/components/Firm/ReviewStars.vue";
     import FavoriteItem from "~/components/Firm/FavoriteItem.vue";
+    import AddressFirm from "~/components/Firm/AddressFirm.vue";
 
     export default {
         name: "Item",
@@ -122,7 +123,7 @@
                 categories: "firms/categories",
             })
         },
-        components: {TimeWork, ReviewStars,FavoriteItem},
+        components: {TimeWork, ReviewStars,FavoriteItem,AddressFirm},
         props: {
             firm: {
                 type: Object,

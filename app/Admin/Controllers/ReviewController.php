@@ -38,8 +38,6 @@ class ReviewController extends AdminController
         $grid->column('comment', __('Комментарий'));
         $grid->column('value', __('Оценка'));
         $grid->column('created_at', __('Дата добавления'));
-        $grid->ip('ip', __('IP'));
-
         $grid->filter(function ($filter) {
             $filter->disableIdFilter();
             $filter->like('comment', 'comment');

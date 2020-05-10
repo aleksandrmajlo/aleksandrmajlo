@@ -9,10 +9,15 @@ class YandexgeoController extends Controller
 {
     public function getLatLng(Request $request)
     {
+
+        ini_set( 'precision', 17 );
+        ini_set( 'serialize_precision', 17 );
+        //*************************************
         $address = $request->address;
         $KEY = env('YANDEX_KEY');
         $LatLng = false;
         $locale = \App::getLocale();
+
         if ($locale == "uk") {
             $lang = 'uk-UA';
         } elseif ($locale == 'en') {
@@ -32,8 +37,8 @@ class YandexgeoController extends Controller
             if(!empty($collection)){
                 $result = $collection[0];
                 $LatLng = [
-                    'lat' => $result->getLatitude(),
-                    'lng' => $result->getLongitude()
+                    'lat' => (string)$result->getLatitude(),
+                    'lng' => (string)$result->getLongitude()
                 ];
             }
         }

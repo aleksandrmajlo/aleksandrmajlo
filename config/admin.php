@@ -95,7 +95,7 @@ return [
     | If your page is going to be accessed via https, set it to `true`.
     |
     */
-    'https' => env('ADMIN_HTTPS', false),
+    'https' => env('ADMIN_HTTPS', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -415,7 +415,7 @@ return [
                 ],
 
                 'yadex' => [
-                    'api_key' => '',
+                    'api_key' => 'dfbc0300-1958-4967-a2c3-4d3c8d41fdcc',
                 ],
 
                 'baidu' => [

@@ -62,9 +62,10 @@
                     loader.hide()
                 } else {
                     let res = e.suggestion;
-                    axios.get('https://wikirent.info/api/getLatLng', {params: {address: res.value}})
+                    axios.get('getLatLng', {params: {address: res.value}})
                         .then(response => {
-                            // console.log(response.data.latlng, ' api')
+                            console.log(' api')
+                            console.log(response.data.latlng);
                             app.$store.commit("map/SET_SEARCH", {
                                 value: res.value,
                                 type: res.type,

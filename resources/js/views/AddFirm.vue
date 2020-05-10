@@ -89,7 +89,7 @@
                     </div>
                     <div class="col-lg-6 d-flex flex-column">
                         <div class="accordion-item accordion-item--js border-dotted border-dotted border-dotted--block"
-                             v-show-slide:400:ease="isShowTimeWork">
+                             v-show="isShowTimeWork">
                             <div class="accordion-item__toggle accordion-item__toggle--js">{{$t('ob_time')}}</div>
                             <div class="accordion-item__dropdown accordion-item__dropdown--js">
                                 <table>
@@ -264,7 +264,6 @@
                                 </table>
                             </div>
                         </div>
-
                         <div class="form-group">
                            <textarea
                                class="form-control border-dotted"
@@ -380,7 +379,6 @@
             this.$store.dispatch('firms/getCategories')
         },
         mounted() {
-
             $(".accordion-item__toggle--js").click(function () {
                 $(this)
                     .next()
@@ -409,8 +407,10 @@
             },
             send() {
                 if (this.valid()) {
+                    console.log(this.location)
                     this.SetImages();
                     let data = {
+                        // local: this.locale,
                         firm: this.firm,
                         address: this.address,
                         location: this.location,
@@ -428,6 +428,7 @@
                             if (typeof response.data.error !== "undefined") {
                                 this.showShwal("error", response.data.error);
                             } else {
+
                                 this.showShwal("success", this.$t("successAddFirm"));
                                 //обнуление данных
                                 $("#my-input-search").val("");
@@ -443,11 +444,16 @@
                                     type: "",
                                     latlng: null
                                 });
+
                             }
                         })
                         .catch(error => {
-                            this.showShwal("error", error);
+                            // this.showShwal("error", error);
+                        })
+                        .then(function () {
+                            // always executed
                         });
+
                 } else {
                     this.showShwal("error", this.$t("errorAddFirm"));
                 }

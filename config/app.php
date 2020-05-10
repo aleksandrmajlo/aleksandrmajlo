@@ -66,7 +66,6 @@ return [
     | ahead and set this to a sensible default for you out of the box.
     |
     */
-
     'timezone' => 'UTC',
 
     /*
@@ -79,8 +78,7 @@ return [
     | to any of the locales which will be supported by the application.
     |
     */
-
-    'locale' => 'uk',
+    'locale' => 'ru',
     'locales' => [
         'uk' => 'UA',
         'ru' => 'RU',
@@ -98,7 +96,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'ru',
+    'fallback_locale' => 'uk-UA',
 
     /*
     |--------------------------------------------------------------------------

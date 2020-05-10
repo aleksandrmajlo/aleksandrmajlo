@@ -32,7 +32,6 @@
             ...mapGetters({
                 zoom: "map/zoom",
                 center: "map/center",
-
                 search: "map/search",
                 user_position: "map/user_position",
                 locale: "lang/locale",
@@ -124,10 +123,18 @@
                     let len = firms.length;
                     for (let index = 0; index < len; index++) {
                         const element = firms[index];
+
                         if (index === 0) {
-                            address = element.address;
+
+                            if(element['address_'+this.locale]){
+                                address = element['address_'+this.locale];
+                            }else{
+                                address = element.address;
+                            }
+
                             coord = element.coord;
                         }
+
                         let koma = " ";
                         if (index !== (len - 1)) koma = ", ";
                         title +=
